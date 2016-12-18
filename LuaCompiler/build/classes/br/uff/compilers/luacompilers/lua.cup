@@ -82,6 +82,7 @@ non terminal fieldsepfieldtemp;
 non terminal fieldseptemp;
 non terminal twoperiodidentifertemp;
 non terminal ifstatment;
+non terminal functioncalltemp;
 
 
 /* Precedences */
@@ -211,9 +212,12 @@ prefixexp ::= var
             | OPEN_PARENTHESES exp CLOSE_PARENTHESES
             ;
 
-functioncall ::= prefixexp args
-               | prefixexp COLON IDENTIFIER args
-               ;
+functioncall ::= prefixexp functioncalltemp
+            ;
+
+functioncalltemp ::= COLON IDENTIFIER args
+            | args
+            ;
 
 args ::= OPEN_PARENTHESES explisttemp CLOSE_PARENTHESES
        | tableconstructor
