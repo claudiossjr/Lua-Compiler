@@ -117,7 +117,7 @@ semicolontemp ::= SEMICOLON
         ;
 
 stat ::= varlist SIGN explist
-        | functioncall
+        | prefixexp
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
@@ -186,10 +186,10 @@ commaidentifiertemp ::= COMMA IDENTIFIER commaidentifiertemp
         |
         ;
 
-explist ::= expcommatemp exp
+explist ::= exp expcommatemp 
         ;
 
-expcommatemp ::= exp COMMA expcommatemp 
+expcommatemp ::= COMMA exp expcommatemp 
         |
         ;
 
@@ -252,18 +252,15 @@ fieldsepfieldtemp ::= fieldsep field fieldsepfieldtemp
         |
         ;
 
-fieldseptemp ::= fieldsep
-        |
-        ;
-
 field ::= OPEN_BRACKETS exp CLOSE_BRACKETS SIGN exp
         | IDENTIFIER SIGN exp
         | exp
+        |
         ;
 
 fieldsep ::= COMMA
-            | SEMICOLON
-            ;
+        | SEMICOLON
+        ;
             
 binop ::= PLUS
         | MINUS

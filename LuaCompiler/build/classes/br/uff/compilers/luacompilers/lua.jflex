@@ -34,12 +34,12 @@ import br.uff.compilers.luacompilers.sym;
 
 /* Line terminator regex */
 LineTerminator = \r|\n|\r\n
-InputCharacter = [^\r\n]
+//InputCharacter = [^\r\n]
 WhiteSpace = {LineTerminator} | [ \t\f]
 
 /* Comments can be inline or block comments */
 regex_inline_comment = -{2}[^\[{2}][^\]{2}]\s*.*
-regex_block_comment = -{2}\[{2}\s*[^-{2}\]{2}]*-{2}\]{2}
+regex_block_comment = \[((=*)\[(.|\n)*?)\]\2\]
 regex_comment = {regex_inline_comment} | {regex_block_comment}
 
 /* Name can be variable or function name */
@@ -115,5 +115,6 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 {regex_number} 			{ System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline,new String(yytext())); }
 {regex_string} 			{ System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline,new String(yytext())); }
 {regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline,new String(yytext())); }
-
-.						{/* Syntax Error */}
+{LineTerminator}                { /* Syntax Error */ }
+{WhiteSpace}                    { /* Syntax Error */ }
+.                               { /* Syntax Error */ }
