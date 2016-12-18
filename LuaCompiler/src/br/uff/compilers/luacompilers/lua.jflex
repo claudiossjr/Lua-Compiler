@@ -33,9 +33,9 @@ import br.uff.compilers.luacompilers.sym;
 
 
 /* Line terminator regex */
-//LineTerminator = \r|\n|\r\n
-//InputCharacter = [^\r\n]
-//WhiteSpace = {LineTerminator} | [ \t\f]
+LineTerminator = \r|\n|\r\n
+InputCharacter = [^\r\n]
+WhiteSpace = {LineTerminator} | [ \t\f]
 
 /* Comments can be inline or block comments */
 regex_inline_comment = -{2}[^\[{2}][^\]{2}]\s*.*

@@ -1,6 +1,7 @@
 package br.uff.compilers.luacompilers;
 
 import java_cup.runtime.*;
+import java.io.FileReader;
 
 parser code
 {:
@@ -14,6 +15,17 @@ parser code
         System.out.println("\nOcorreu um erro na linha " + (s.right)+ ", coluna "+s.left+". Identificador " +
         s.value + " não reconhecido.");
     }
+    
+    public static void main(String[] args){
+        try {
+            LuaParser parser = new LuaParser(new LuaLexer(new FileReader(args[0])));
+            Object result = parser.parse().value;
+            System.out.println("*** Resultados finais ***");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 :}
 
@@ -69,6 +81,7 @@ non terminal fieldlisttemp;
 non terminal fieldsepfieldtemp;
 non terminal fieldseptemp;
 non terminal twoperiodidentifertemp;
+non terminal ifstatment;
 
 
 /* Precedences */
@@ -87,7 +100,8 @@ start with chuck;
 chuck ::= tempchuck laststattemp
           ;
 
-tempchuck ::= stat semicolontemp
+tempchuck ::= stat semicolontemp tempchuck
+            |
         ;
 
 laststattemp ::= laststat semicolontemp
@@ -107,7 +121,7 @@ stat ::= varlist SIGN explist
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
-        | IF exp THEN block elseiftemp elsetemp END
+        | ifstatment
         | FOR IDENTIFIER SIGN exp COMMA exp commaexptemp DO block END
         | FOR namelist IN explist DO block END
         | FUNCTION funcname funcbody
@@ -115,7 +129,11 @@ stat ::= varlist SIGN explist
         | LOCAL namelist signexplisttemp
         ;
 
-elseiftemp ::= ELSEIF exp THEN block
+ifstatment ::= IF exp THEN block elseiftemp elsetemp END 
+        ;
+
+elseiftemp ::= ELSEIF exp THEN block elseiftemp
+        |
         ;
 
 elsetemp ::=  ELSE block
@@ -141,7 +159,8 @@ explisttemp ::= explist
 funcname ::= IDENTIFIER periodidentifiertemp twoperiodidentifertemp
         ;
 
-periodidentifiertemp ::= PERIOD IDENTIFIER
+periodidentifiertemp ::= PERIOD IDENTIFIER periodidentifiertemp
+        |
         ;
 
 twoperiodidentifertemp ::= TWO_PERIOD IDENTIFIER
@@ -151,7 +170,8 @@ twoperiodidentifertemp ::= TWO_PERIOD IDENTIFIER
 varlist ::= var commavartemp
         ;
 
-commavartemp ::= COMMA var
+commavartemp ::= COMMA var commavartemp
+        |
         ;
 
 var ::= IDENTIFIER
@@ -162,13 +182,15 @@ var ::= IDENTIFIER
 namelist ::= IDENTIFIER commaidentifiertemp
         ;
 
-commaidentifiertemp ::= COMMA IDENTIFIER
+commaidentifiertemp ::= COMMA IDENTIFIER commaidentifiertemp
+        |
         ;
 
 explist ::= expcommatemp exp
         ;
 
-expcommatemp ::= exp COMMA
+expcommatemp ::= exp COMMA expcommatemp 
+        |
         ;
 
 exp ::= NIL
@@ -226,7 +248,8 @@ fieldlisttemp ::= fieldlist
 fieldlist ::= field fieldsepfieldtemp fieldseptemp
         ;
 
-fieldsepfieldtemp ::= fieldsep field
+fieldsepfieldtemp ::= fieldsep field fieldsepfieldtemp 
+        |
         ;
 
 fieldseptemp ::= fieldsep
