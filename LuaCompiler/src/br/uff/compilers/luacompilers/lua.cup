@@ -83,6 +83,7 @@ non terminal fieldseptemp;
 non terminal twoperiodidentifertemp;
 non terminal ifstatment;
 non terminal functioncalltemp;
+non terminal vartemp;
 
 
 /* Precedences */
@@ -112,11 +113,6 @@ laststattemp ::= laststat semicolontemp
 block ::= chuck
           ;
 
-
-semicolontemp ::= SEMICOLON
-        |
-        ;
-
 stat ::= varlist SIGN explist
         | prefixexp
         | DO block END
@@ -138,10 +134,6 @@ elseiftemp ::= ELSEIF exp THEN block elseiftemp
         ;
 
 elsetemp ::=  ELSE block
-        |
-        ;
-
-commaexptemp ::= COMMA exp
         |
         ;
 
@@ -171,46 +163,17 @@ twoperiodidentifertemp ::= TWO_PERIOD IDENTIFIER
 varlist ::= var commavartemp
         ;
 
-commavartemp ::= COMMA var commavartemp
-        |
-        ;
-
 var ::= IDENTIFIER
-    | prefixexp OPEN_BRACKETS exp CLOSE_BRACKETS
-    | prefixexp PERIOD IDENTIFIER
-    ;
+    | prefixexp vartemp;
+
+vartemp ::= PERIOD IDENTIFIER
+        | OPEN_BRACKETS exp CLOSE_BRACKETS;
 
 namelist ::= IDENTIFIER commaidentifiertemp
         ;
 
-commaidentifiertemp ::= COMMA IDENTIFIER commaidentifiertemp
-        |
-        ;
-
 explist ::= exp expcommatemp 
         ;
-
-expcommatemp ::= COMMA exp expcommatemp 
-        |
-        ;
-
-exp ::= NIL
-        | FALSE
-        | TRUE
-        | NUMBER
-        | STRING 
-        | ELLIPSIS
-        | function
-        | prefixexp
-        | tableconstructor
-        | exp binop exp
-        | unop exp
-        ;
-
-prefixexp ::= var 
-            | functioncall
-            | OPEN_PARENTHESES exp CLOSE_PARENTHESES
-            ;
 
 functioncall ::= prefixexp functioncalltemp
             ;
@@ -219,15 +182,7 @@ functioncalltemp ::= COLON IDENTIFIER args
             | args
             ;
 
-args ::= OPEN_PARENTHESES explisttemp CLOSE_PARENTHESES
-       | tableconstructor
-       | STRING
-       ;
-
 function ::= FUNCTION funcbody
-          ;
-
-funcbody ::= OPEN_PARENTHESES parlisttemp CLOSE_PARENTHESES block END
           ;
 
 parlisttemp ::= parlist
@@ -236,10 +191,6 @@ parlisttemp ::= parlist
 
 parlist ::= namelist commaellipsistemp
         | ELLIPSIS
-        ;
-
-commaellipsistemp ::= COMMA ELLIPSIS
-        |
         ;
 
 tableconstructor ::=  OPEN_BRACES fieldlisttemp CLOSE_BRACES
@@ -260,10 +211,6 @@ field ::= OPEN_BRACKETS exp CLOSE_BRACKETS SIGN exp
         | IDENTIFIER SIGN exp
         | exp
         |
-        ;
-
-fieldsep ::= COMMA
-        | SEMICOLON
         ;
             
 binop ::= PLUS
@@ -287,3 +234,58 @@ unop ::= MINUS
        | NOT
        | LENGTH
        ;
+
+semicolontemp ::= SEMICOLON
+        |
+        ;
+
+fieldsep ::= COMMA
+        | SEMICOLON
+        ;
+
+
+commaellipsistemp ::= COMMA ELLIPSIS
+        |
+        ;
+
+expcommatemp ::= COMMA exp expcommatemp 
+        |
+        ;
+
+commaidentifiertemp ::= COMMA IDENTIFIER commaidentifiertemp
+        |
+        ;
+
+commavartemp ::= COMMA var commavartemp
+        |
+        ;
+
+commaexptemp ::= COMMA exp
+        |
+        ;
+
+args ::= OPEN_PARENTHESES explisttemp CLOSE_PARENTHESES
+       | tableconstructor
+       | STRING
+       ;
+
+exp ::= NIL
+        | FALSE
+        | TRUE
+        | NUMBER
+        | STRING 
+        | ELLIPSIS
+        | function
+        | prefixexp
+        | tableconstructor
+        | exp binop exp
+        | unop exp
+        ;
+
+funcbody ::= OPEN_PARENTHESES parlisttemp CLOSE_PARENTHESES block END
+          ;
+
+prefixexp ::= var 
+            | functioncall
+            | OPEN_PARENTHESES exp CLOSE_PARENTHESES
+            ;
