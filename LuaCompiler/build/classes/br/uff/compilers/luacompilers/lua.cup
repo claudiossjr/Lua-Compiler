@@ -114,7 +114,7 @@ block ::= chuck
           ;
 
 stat ::= varlist SIGN explist
-        | prefixexp
+        | functioncall
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
