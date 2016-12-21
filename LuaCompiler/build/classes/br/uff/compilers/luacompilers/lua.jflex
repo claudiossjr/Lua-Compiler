@@ -58,8 +58,6 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 /* Lexical Rules */
 
 {regex_comment} 		{ System.out.printf(" COMMENT"); }
-{regex_number} 			{ System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline,new String(yytext())); }
-{regex_string} 			{ System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline,new String(yytext())); }
 
 /* tokens */
 "do"					{ System.out.printf(" DO"); return symbol(sym.DO, yychar, yyline); }
@@ -113,7 +111,9 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 "not"					{ System.out.printf(" NOT"); return symbol(sym.NOT, yychar, yyline ); }
 "#"					{ System.out.printf(" LENGTH"); return symbol(sym.LENGTH, yychar, yyline ); }
  
-{regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline,new String(yytext())); }
+{regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline); }
+{regex_number} 			{ System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline); }
+{regex_string} 			{ System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline); }
 {LineTerminator}                { /* Syntax Error */ }
 {WhiteSpace}                    { /* Syntax Error */ }
 .                               { /* Syntax Error */ }
