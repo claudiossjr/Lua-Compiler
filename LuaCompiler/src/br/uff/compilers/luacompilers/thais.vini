@@ -37,14 +37,14 @@ function element()
   if lookahead(1).kind == tokens.NAME and
      lookahead(2).kind == tokens.EQUALS then match(tokens.NAME); match(tokens.EQUALS); match(tokens.NAME)
   elseif lookahead(1).kind == tokens.NAME then match(tokens.NAME)
-  elseif lookahead(1).kind == tokens.LBRACK then list()
+  elseif lookahead(1).kind == tokens.LBRACK then list( )
   else error("expecting name or list; found "..tostring(lookahead(1)))
   end
 end
 
 function stat()
-  return matchorbacktrack("list",       function() list(); match(tokens.EOF) end) or
-         matchorbacktrack("assignment", function() assign(); match(tokens.EOF) end) or
+  return matchorbacktrack("list",       function( ) list( ); match(tokens.EOF) end) or
+         matchorbacktrack("assignment", function( ) assign( ); match(tokens.EOF) end) or
          error("expecting stat but found "..tostring(lookahead(1)))
 end
 

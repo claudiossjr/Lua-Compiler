@@ -14,3 +14,7 @@ function move(n, source, target, auxiliary)
     end
 end
 move(5, A, C, B)
+
+function cla()
+    return "UFF"
+end

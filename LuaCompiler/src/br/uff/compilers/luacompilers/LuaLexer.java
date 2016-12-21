@@ -884,7 +884,7 @@ public class LuaLexer implements java_cup.runtime.Scanner {
             }
           case 62: break;
           case 11: 
-            { System.out.printf(" COMMA"); return symbol(sym.PERIOD, yychar, yyline );
+            { System.out.printf(" PERIOD"); return symbol(sym.PERIOD, yychar, yyline );
             }
           case 63: break;
           case 12: 
@@ -984,7 +984,7 @@ public class LuaLexer implements java_cup.runtime.Scanner {
             }
           case 87: break;
           case 36: 
-            { System.out.printf(" END"); return symbol(sym.END, yychar, yyline );
+            { System.out.println(" END"); return symbol(sym.END, yychar, yyline );
             }
           case 88: break;
           case 37: 

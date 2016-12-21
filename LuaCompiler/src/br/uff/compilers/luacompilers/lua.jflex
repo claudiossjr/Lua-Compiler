@@ -62,7 +62,7 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 
 /* tokens */
 "do"					{ System.out.printf(" DO"); return symbol(sym.DO, yychar, yyline); }
-"end"					{ System.out.printf(" END"); return symbol(sym.END, yychar, yyline ); }
+"end"					{ System.out.println(" END"); return symbol(sym.END, yychar, yyline ); }
 "while"					{ System.out.printf(" WHILE"); return symbol(sym.WHILE, yychar, yyline ); }
 "repeat"				{ System.out.printf(" REPEAT"); return symbol(sym.REPEAT, yychar, yyline ); }
 "if"					{ System.out.printf(" IF"); return symbol(sym.IF, yychar, yyline ); }
@@ -84,7 +84,7 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 ":"					{ System.out.printf(" COLON"); return symbol(sym.COLON, yychar, yyline ); }
 ";"					{ System.out.printf(" SEMICOLON"); return symbol(sym.SEMICOLON, yychar, yyline ); }
 ","					{ System.out.printf(" COMMA"); return symbol(sym.COMMA, yychar, yyline ); }
-"."					{ System.out.printf(" COMMA"); return symbol(sym.PERIOD, yychar, yyline ); }
+"."					{ System.out.printf(" PERIOD"); return symbol(sym.PERIOD, yychar, yyline ); }
 "["					{ System.out.printf(" OPEN_BRACKETS"); return symbol(sym.OPEN_BRACKETS, yychar, yyline ); }
 "]"					{ System.out.printf(" CLOSE_BRACKETS"); return symbol(sym.CLOSE_BRACKETS, yychar, yyline ); }
 "{"					{ System.out.printf(" OPEN_BRACES"); return symbol(sym.OPEN_BRACES, yychar, yyline ); }
