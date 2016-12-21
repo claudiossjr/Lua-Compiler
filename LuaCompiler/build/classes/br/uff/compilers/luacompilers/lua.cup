@@ -393,10 +393,10 @@ functioncall ::= prefixexp:prefixexp functioncalltemp:functioncalltemp
 functioncalltemp ::= COLON:colon IDENTIFIER:id args:args
             {:
                 // Node colon = new Node(colon);
-                // Node id = new Node(id);
+                Node ids = new Node(id);
                 args.addChildren(colon);
-                args.addChildren(id);
-                RESULT = args;
+                ids.addChildren(args);
+                RESULT = ids;
             :}
             | args:args
             {:
@@ -406,9 +406,9 @@ functioncalltemp ::= COLON:colon IDENTIFIER:id args:args
 
 function ::= FUNCTION:function funcbody:funcbody
             {:
-                // Node function = new Node(function);
-                funcbody.addChildren(function);
-                RESULT = funcbody;
+                Node func = new Node(function);
+                func.addChildren(funcbody);
+                RESULT = func;
             :}
           ;
 
@@ -422,8 +422,8 @@ parlisttemp ::= parlist:parlist
 
 parlist ::= namelist:namelist commaellipsistemp:commaellipsistemp
         {:
-            commaellipsistemp.addChildren(namelist);
-            RESULT = commaellipsistemp;
+            namelist.addChildren(commaellipsistemp);
+            RESULT = namelist;
         :}
         | ELLIPSIS:ellipsis
         {:
@@ -587,10 +587,10 @@ fieldsep ::= COMMA:comma
 
 commaellipsistemp ::= COMMA:comma ELLIPSIS:ellipsis
         {:
-        // Node comma = new Node(comma);
-        Node ell = new Node(ellipsis);
-        ell.addChildren(comma);
-        RESULT = ell;
+         Node comm = new Node(comma);
+        //Node ell = new Node(ellipsis);
+        comm.addChildren(ellipsis);
+        RESULT = comm;
         :}
         |
         {: RESULT = new Node(); :}
@@ -715,6 +715,7 @@ exptemp ::= NIL:n
 
 funcbody ::= OPEN_PARENTHESES:openP parlisttemp:parlisttemp CLOSE_PARENTHESES:closeP block:block END:end
             {:
+                
                 parlisttemp.addChildren(openP);
                 parlisttemp.addChildren(closeP);
                 block.addChildren(parlisttemp);
