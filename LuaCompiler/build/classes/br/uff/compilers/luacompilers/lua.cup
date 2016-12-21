@@ -79,11 +79,11 @@ non terminal parlisttemp;
 non terminal commaellipsistemp;
 non terminal fieldlisttemp;
 non terminal fieldsepfieldtemp;
-non terminal fieldseptemp;
 non terminal twoperiodidentifertemp;
 non terminal ifstatment;
 non terminal functioncalltemp;
 non terminal vartemp;
+non terminal exptemp;
 
 
 /* Precedences */
@@ -96,6 +96,8 @@ precedence left PLUS, MINUS;
 precedence left TIMES, DIV, PERCENT;
 precedence left NOT;
 precedence right UP_CARET;
+precedence left COMMA;
+precedence left OPEN_PARENTHESES;
 
 start with chuck;
 
@@ -114,7 +116,7 @@ block ::= chuck
           ;
 
 stat ::= varlist SIGN explist
-        | functioncall
+        | prefixexp 
         | DO block END
         | WHILE exp DO block END
         | REPEAT block UNTIL exp
@@ -197,10 +199,9 @@ tableconstructor ::=  OPEN_BRACES fieldlisttemp CLOSE_BRACES
         ;
 
 fieldlisttemp ::= fieldlist
-        |
         ;
 
-fieldlist ::= field fieldsepfieldtemp fieldseptemp
+fieldlist ::= field fieldsepfieldtemp
         ;
 
 fieldsepfieldtemp ::= fieldsep field fieldsepfieldtemp 
@@ -269,7 +270,12 @@ args ::= OPEN_PARENTHESES explisttemp CLOSE_PARENTHESES
        | STRING
        ;
 
-exp ::= NIL
+exp ::=  exp binop exptemp
+        | unop exp
+        | exptemp
+        ;
+
+exptemp ::= NIL
         | FALSE
         | TRUE
         | NUMBER
@@ -278,8 +284,6 @@ exp ::= NIL
         | function
         | prefixexp
         | tableconstructor
-        | exp binop exp
-        | unop exp
         ;
 
 funcbody ::= OPEN_PARENTHESES parlisttemp CLOSE_PARENTHESES block END
