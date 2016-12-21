@@ -1,0 +1,16 @@
+function move(n, source, target, auxiliary)
+    if n > 0 then
+
+        move(n - 1, source, auxiliary, target)
+
+
+        target.append(source.pop())
+
+
+        print(A, B, C, "##############")
+
+
+        move(n - 1, auxiliary, target, source)
+    end
+end
+move(5, A, C, B)

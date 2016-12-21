@@ -102,10 +102,11 @@ precedence left OPEN_PARENTHESES;
 start with chuck;
 
 chuck ::= tempchuck laststattemp
-          ;
+        {: System.out.println("BINIS"); :} 
+        ;
 
 tempchuck ::= stat semicolontemp tempchuck
-            |
+        |
         ;
 
 laststattemp ::= laststat semicolontemp
@@ -178,6 +179,7 @@ explist ::= exp expcommatemp
         ;
 
 functioncall ::= prefixexp functioncalltemp
+            {: System.out.println("THAIS"); :}
             ;
 
 functioncalltemp ::= COLON IDENTIFIER args
