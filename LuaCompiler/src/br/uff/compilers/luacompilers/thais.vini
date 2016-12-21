@@ -12,24 +12,18 @@ function match(kind)
   end
 end
 
--- basic backtracking mechanism
 function matchorbacktrack(name, func)
-  lookahead:mark() -- mark this spot in input so we can rewind
+  lookahead:mark() 
   local success, msg = pcall(func)
-  lookahead:release() -- either way, rewind to where we were
+  lookahead:release() 
   if success then
-    func()  -- if the match succeeded then perform it.
+    func()  
   else
     print("Failed matching "..name.." with msg: "..msg..". Backtracked.")
   end
   return success
 end
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
--- elements : element (',' element)* ;
 function elements()
   element()
   while lookahead(1).kind == tokens.COMMA do
@@ -38,7 +32,7 @@ function elements()
   end
 end
 
--- element : NAME '=' NAME | NAME | list ; assignment, NAME or list
+
 function element()
   if lookahead(1).kind == tokens.NAME and
      lookahead(2).kind == tokens.EQUALS then match(tokens.NAME); match(tokens.EQUALS); match(tokens.NAME)
@@ -48,29 +42,27 @@ function element()
   end
 end
 
--- this is the statement needing backtrack
--- stat : list EOF | assign EOF
 function stat()
   return matchorbacktrack("list",       function() list(); match(tokens.EOF) end) or
          matchorbacktrack("assignment", function() assign(); match(tokens.EOF) end) or
          error("expecting stat but found "..tostring(lookahead(1)))
 end
 
--- assign : list '=' list ; // parallel assignment
+
 function assign()
   list()
   match(tokens.EQUALS)
   list()
 end
 
--- list : '[' elements ']' ; // match bracketed list
+
 list = lookahead:memoizedRule(function()
   match(tokens.LBRACK)
   elements()
   match(tokens.RBRACK)
 end)
 
--- elements : element (',' element)* ; // match comma-separated list
+
 function elements()
   element()
   while (lookahead(1).kind == tokens.COMMA) do
@@ -79,7 +71,7 @@ function elements()
   end
 end
 
--- element : name '=' NAME | NAME | list ; // assignment, name or list
+
 function element()
   if lookahead(1).kind == tokens.NAME and lookahead(2).kind == tokens.EQUALS then
     match(tokens.NAME)
@@ -94,11 +86,7 @@ function element()
   end
 end
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-sucess, msg = pcall(stat) -- startup parser.
+sucess, msg = pcall(stat) 
 
 if sucess then
   print("The input was valid")

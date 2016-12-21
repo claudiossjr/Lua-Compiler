@@ -868,11 +868,11 @@ public class LuaLexer implements java_cup.runtime.Scanner {
             }
           case 57: break;
           case 7: 
-            { System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline,new String(yytext()));
+            { System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline);
             }
           case 58: break;
           case 8: 
-            { System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline,new String(yytext()));
+            { System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline);
             }
           case 59: break;
           case 9: 
@@ -940,7 +940,7 @@ public class LuaLexer implements java_cup.runtime.Scanner {
             }
           case 75: break;
           case 25: 
-            { System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline,new String(yytext()));
+            { System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline);
             }
           case 76: break;
           case 26: 

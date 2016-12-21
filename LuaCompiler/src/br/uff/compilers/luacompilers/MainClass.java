@@ -16,14 +16,15 @@ public class MainClass {
     public static void main(String[] args) {
         final int GERAR = 1;
         final int EXECUTAR = 2;
-        final int SAIR = 3;
+        final int LEXER = 3;
+        final int SAIR = 4;
         String ARQUIVO_LEXICO = "/src/br/uff/compilers/luacompilers/lua.jflex";
         String ARQUIVO_SINTATICO = "/src/br/uff/compilers/luacompilers/lua.cup";
         File f = new File("");
         Scanner in = new Scanner(System.in);
         int valor;
         do {
-            System.out.println("Escolha uma opção:\n1)Gerar\n2)Executar\n3)Sair\nOpção: ");
+            System.out.println("Escolha uma opção:\n1)Gerar\n2)Executar\n3)Lexer\n4)Sair\nOpção: ");
             valor = in.nextInt();
             switch (valor) {
                 case GERAR: 
@@ -47,12 +48,18 @@ public class MainClass {
                     System.out.println("Gerado!");
                     break;
                 case EXECUTAR: 
-                    String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/cla.uff";
+                    String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/thais.vini";
                     String[] argsLuaParser = {nomeDoArquivo};
                     LuaParser.main(argsLuaParser);
                     System.out.println("Executado!");
                     break;
-                
+                case LEXER:
+                    String nomeDoArquivoLexer = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/thais.vini";
+                    String[] argsLuaLexer = {nomeDoArquivoLexer};
+                    LuaLexer.main(argsLuaLexer);
+                    System.out.println("Executado!");
+                    break;
+                    
                 case SAIR: 
                     System.out.println("Adeus!");
                     break;
@@ -62,6 +69,6 @@ public class MainClass {
                     break;
                 
             }
-        } while (valor != 3);
+        } while (valor != 4);
     }
 }

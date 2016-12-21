@@ -193,19 +193,19 @@ public class LuaLexer implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\2\1\1\2\1\3\1\4\1\5\1\6\1\7"+
-    "\1\10\1\1\1\11\1\12\6\7\1\1\6\7\1\13"+
+    "\1\10\1\11\1\1\1\12\1\13\6\10\1\1\6\10"+
     "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23"+
-    "\1\24\1\25\1\26\1\1\1\27\1\0\1\30\3\0"+
-    "\1\31\1\0\1\32\2\7\1\33\1\34\3\7\1\35"+
-    "\1\36\1\35\1\36\11\7\1\37\1\40\1\41\2\0"+
-    "\1\10\1\0\1\10\1\42\1\43\1\7\1\44\1\45"+
-    "\4\7\1\46\2\7\1\47\3\7\1\50\1\0\1\51"+
-    "\4\7\1\52\1\53\3\7\1\50\1\0\1\7\1\54"+
-    "\1\55\2\7\1\56\1\7\1\57\1\0\1\60\1\61"+
-    "\1\62\1\7\1\50\1\7\1\63";
+    "\1\24\1\25\1\26\1\27\1\1\1\30\1\0\1\31"+
+    "\3\0\1\32\1\0\1\33\2\10\1\34\1\35\3\10"+
+    "\1\36\1\37\1\36\1\37\11\10\1\40\1\41\1\42"+
+    "\2\0\1\11\1\0\1\11\1\43\1\44\1\10\1\45"+
+    "\1\46\4\10\1\47\2\10\1\50\3\10\1\51\1\0"+
+    "\1\52\4\10\1\53\1\54\3\10\1\51\1\0\1\10"+
+    "\1\55\1\56\2\10\1\57\1\10\1\60\1\0\1\61"+
+    "\1\62\1\63\1\10\1\51\1\10\1\64";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[122];
+    int [] result = new int[123];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -230,25 +230,25 @@ public class LuaLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\67\0\156\0\245\0\67\0\67\0\67\0\334"+
-    "\0\u0113\0\u014a\0\u0181\0\u01b8\0\u01ef\0\u0226\0\u025d\0\u0294"+
-    "\0\u02cb\0\u0302\0\u0339\0\u0370\0\u03a7\0\u03de\0\u0415\0\u044c"+
-    "\0\u0483\0\u04ba\0\67\0\67\0\67\0\67\0\67\0\67"+
-    "\0\67\0\67\0\67\0\67\0\u04f1\0\u0528\0\u055f\0\67"+
-    "\0\u0596\0\67\0\u05cd\0\u0604\0\u0181\0\67\0\u063b\0\u0672"+
-    "\0\u06a9\0\u06e0\0\u0113\0\u0113\0\u0717\0\u074e\0\u0785\0\u0113"+
-    "\0\u0113\0\67\0\67\0\u07bc\0\u07f3\0\u082a\0\u0861\0\u0898"+
-    "\0\u08cf\0\u0906\0\u093d\0\u0974\0\67\0\67\0\67\0\u09ab"+
-    "\0\u09e2\0\u05cd\0\u0a19\0\u0a19\0\67\0\u0113\0\u0a50\0\u0113"+
-    "\0\u0113\0\u0a87\0\u0abe\0\u0af5\0\u0b2c\0\u0113\0\u0b63\0\u0b9a"+
-    "\0\u0113\0\u0bd1\0\u0c08\0\u0c3f\0\u0c76\0\u0cad\0\u0ce4\0\u0d1b"+
-    "\0\u0d52\0\u0d89\0\u0dc0\0\u0113\0\u0113\0\u0df7\0\u0e2e\0\u0e65"+
-    "\0\u0e9c\0\u0ed3\0\u0f0a\0\u0113\0\u0113\0\u0f41\0\u0f78\0\u0113"+
-    "\0\u0faf\0\u0113\0\u0fe6\0\u0113\0\u0113\0\u0113\0\u101d\0\u0ed3"+
-    "\0\u1054\0\u0113";
+    "\0\0\0\67\0\156\0\245\0\67\0\67\0\67\0\67"+
+    "\0\334\0\u0113\0\u014a\0\u0181\0\u01b8\0\u01ef\0\u0226\0\u025d"+
+    "\0\u0294\0\u02cb\0\u0302\0\u0339\0\u0370\0\u03a7\0\u03de\0\u0415"+
+    "\0\u044c\0\u0483\0\u04ba\0\67\0\67\0\67\0\67\0\67"+
+    "\0\67\0\67\0\67\0\67\0\67\0\u04f1\0\u0528\0\u055f"+
+    "\0\67\0\u0596\0\67\0\u05cd\0\u0604\0\u0181\0\67\0\u063b"+
+    "\0\u0672\0\u06a9\0\u06e0\0\u0113\0\u0113\0\u0717\0\u074e\0\u0785"+
+    "\0\u0113\0\u0113\0\67\0\67\0\u07bc\0\u07f3\0\u082a\0\u0861"+
+    "\0\u0898\0\u08cf\0\u0906\0\u093d\0\u0974\0\67\0\67\0\67"+
+    "\0\u09ab\0\u09e2\0\u05cd\0\u0a19\0\u0a19\0\67\0\u0113\0\u0a50"+
+    "\0\u0113\0\u0113\0\u0a87\0\u0abe\0\u0af5\0\u0b2c\0\u0113\0\u0b63"+
+    "\0\u0b9a\0\u0113\0\u0bd1\0\u0c08\0\u0c3f\0\u0c76\0\u0cad\0\u0ce4"+
+    "\0\u0d1b\0\u0d52\0\u0d89\0\u0dc0\0\u0113\0\u0113\0\u0df7\0\u0e2e"+
+    "\0\u0e65\0\u0e9c\0\u0ed3\0\u0f0a\0\u0113\0\u0113\0\u0f41\0\u0f78"+
+    "\0\u0113\0\u0faf\0\u0113\0\u0fe6\0\u0113\0\u0113\0\u0113\0\u101d"+
+    "\0\u0ed3\0\u1054\0\u0113";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[122];
+    int [] result = new int[123];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -271,65 +271,65 @@ public class LuaLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\2\1\3\2\2\1\4\1\5\1\6\1\7\1\0"+
-    "\1\2\1\10\1\2\1\11\1\2\2\12\1\13\1\2"+
-    "\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\11"+
-    "\1\23\1\24\1\25\1\26\1\11\1\27\1\30\1\31"+
-    "\1\11\1\2\2\11\1\32\1\11\1\2\1\33\1\34"+
-    "\1\35\1\36\1\37\1\40\1\41\1\42\1\43\1\44"+
-    "\1\45\1\46\1\47\1\50\71\0\1\2\70\0\1\51"+
-    "\11\0\2\12\61\0\1\52\70\0\4\11\4\0\25\11"+
-    "\34\0\2\12\3\0\1\53\1\54\42\0\20\55\1\56"+
-    "\1\57\45\55\16\0\2\12\72\0\1\60\57\0\4\11"+
-    "\4\0\3\11\1\61\4\11\1\62\14\11\32\0\4\11"+
-    "\4\0\2\11\1\63\22\11\32\0\4\11\4\0\11\11"+
-    "\1\64\13\11\32\0\4\11\4\0\2\11\1\65\3\11"+
-    "\2\66\15\11\32\0\4\11\4\0\5\11\1\67\17\11"+
-    "\32\0\4\11\4\0\3\11\1\70\11\11\1\71\7\11"+
-    "\45\0\1\72\11\0\1\73\41\0\4\11\4\0\2\11"+
-    "\1\74\22\11\32\0\4\11\4\0\1\75\24\11\32\0"+
-    "\4\11\4\0\3\11\1\76\21\11\32\0\4\11\4\0"+
-    "\5\11\1\77\3\11\1\100\13\11\32\0\4\11\4\0"+
-    "\2\11\1\101\10\11\1\102\4\11\1\103\4\11\32\0"+
-    "\4\11\4\0\11\11\1\104\13\11\30\0\1\105\66\0"+
-    "\1\106\66\0\1\107\54\0\5\110\1\111\1\110\1\0"+
-    "\6\110\1\0\35\110\1\0\12\110\16\0\2\112\4\0"+
-    "\1\54\46\0\1\113\11\0\2\114\2\0\1\113\44\0"+
-    "\1\55\2\0\5\55\2\0\55\55\23\0\1\115\57\0"+
-    "\4\11\4\0\1\11\1\116\23\11\32\0\4\11\4\0"+
-    "\16\11\2\117\5\11\32\0\4\11\4\0\14\11\1\120"+
-    "\10\11\32\0\4\11\4\0\10\11\1\121\14\11\32\0"+
-    "\4\11\4\0\6\11\2\122\15\11\32\0\4\11\4\0"+
-    "\21\11\1\123\3\11\32\0\4\11\4\0\12\11\1\124"+
-    "\1\11\1\125\10\11\32\0\4\11\4\0\1\11\1\126"+
-    "\23\11\32\0\4\11\4\0\1\127\24\11\32\0\4\11"+
-    "\4\0\20\11\1\130\4\11\32\0\4\11\4\0\11\11"+
-    "\1\131\13\11\32\0\4\11\4\0\10\11\1\132\14\11"+
-    "\32\0\4\11\4\0\3\11\1\133\21\11\32\0\4\11"+
-    "\4\0\1\134\24\11\16\0\6\135\2\0\6\135\1\0"+
-    "\35\135\1\0\12\135\5\0\1\136\4\0\1\111\72\0"+
-    "\2\114\63\0\4\11\4\0\1\137\24\11\32\0\4\11"+
-    "\4\0\10\11\1\140\14\11\32\0\4\11\4\0\13\11"+
-    "\1\141\11\11\32\0\4\11\4\0\1\142\24\11\32\0"+
-    "\4\11\4\0\20\11\1\143\4\11\32\0\4\11\4\0"+
-    "\3\11\1\144\21\11\32\0\4\11\4\0\1\145\24\11"+
-    "\32\0\4\11\4\0\16\11\2\146\5\11\32\0\4\11"+
-    "\4\0\21\11\1\147\3\11\32\0\4\11\4\0\13\11"+
-    "\1\150\11\11\16\0\1\151\3\135\4\151\2\135\55\151"+
-    "\1\136\1\0\4\136\1\152\1\136\2\0\55\136\14\0"+
-    "\4\11\4\0\6\11\2\153\15\11\32\0\4\11\4\0"+
-    "\1\154\24\11\32\0\4\11\4\0\10\11\1\155\14\11"+
-    "\32\0\4\11\4\0\13\11\1\156\11\11\32\0\4\11"+
-    "\4\0\11\11\1\157\13\11\32\0\4\11\4\0\1\160"+
-    "\24\11\32\0\4\11\4\0\14\11\1\161\10\11\32\0"+
-    "\4\11\4\0\23\11\2\162\16\0\1\151\2\0\5\151"+
-    "\2\0\55\151\1\136\1\0\4\136\1\152\1\136\2\0"+
-    "\1\136\1\163\53\136\14\0\4\11\4\0\15\11\1\164"+
-    "\7\11\32\0\4\11\4\0\14\11\1\165\10\11\32\0"+
-    "\4\11\4\0\3\11\1\166\21\11\32\0\4\11\4\0"+
-    "\6\11\2\167\15\11\16\0\1\136\1\0\4\136\1\170"+
-    "\1\136\2\0\55\136\14\0\4\11\4\0\2\11\1\171"+
-    "\22\11\32\0\4\11\4\0\3\11\1\172\21\11\16\0";
+    "\1\2\1\3\2\2\1\4\1\5\1\6\1\7\1\10"+
+    "\1\2\1\11\1\2\1\12\1\2\2\13\1\14\1\2"+
+    "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\12"+
+    "\1\24\1\25\1\26\1\27\1\12\1\30\1\31\1\32"+
+    "\1\12\1\2\2\12\1\33\1\12\1\2\1\34\1\35"+
+    "\1\36\1\37\1\40\1\41\1\42\1\43\1\44\1\45"+
+    "\1\46\1\47\1\50\1\51\71\0\1\2\70\0\1\52"+
+    "\11\0\2\13\61\0\1\53\70\0\4\12\4\0\25\12"+
+    "\34\0\2\13\3\0\1\54\1\55\42\0\20\56\1\57"+
+    "\1\60\45\56\16\0\2\13\72\0\1\61\57\0\4\12"+
+    "\4\0\3\12\1\62\4\12\1\63\14\12\32\0\4\12"+
+    "\4\0\2\12\1\64\22\12\32\0\4\12\4\0\11\12"+
+    "\1\65\13\12\32\0\4\12\4\0\2\12\1\66\3\12"+
+    "\2\67\15\12\32\0\4\12\4\0\5\12\1\70\17\12"+
+    "\32\0\4\12\4\0\3\12\1\71\11\12\1\72\7\12"+
+    "\45\0\1\73\11\0\1\74\41\0\4\12\4\0\2\12"+
+    "\1\75\22\12\32\0\4\12\4\0\1\76\24\12\32\0"+
+    "\4\12\4\0\3\12\1\77\21\12\32\0\4\12\4\0"+
+    "\5\12\1\100\3\12\1\101\13\12\32\0\4\12\4\0"+
+    "\2\12\1\102\10\12\1\103\4\12\1\104\4\12\32\0"+
+    "\4\12\4\0\11\12\1\105\13\12\30\0\1\106\66\0"+
+    "\1\107\66\0\1\110\54\0\5\111\1\112\1\111\1\0"+
+    "\6\111\1\0\35\111\1\0\12\111\16\0\2\113\4\0"+
+    "\1\55\46\0\1\114\11\0\2\115\2\0\1\114\44\0"+
+    "\1\56\2\0\5\56\2\0\55\56\23\0\1\116\57\0"+
+    "\4\12\4\0\1\12\1\117\23\12\32\0\4\12\4\0"+
+    "\16\12\2\120\5\12\32\0\4\12\4\0\14\12\1\121"+
+    "\10\12\32\0\4\12\4\0\10\12\1\122\14\12\32\0"+
+    "\4\12\4\0\6\12\2\123\15\12\32\0\4\12\4\0"+
+    "\21\12\1\124\3\12\32\0\4\12\4\0\12\12\1\125"+
+    "\1\12\1\126\10\12\32\0\4\12\4\0\1\12\1\127"+
+    "\23\12\32\0\4\12\4\0\1\130\24\12\32\0\4\12"+
+    "\4\0\20\12\1\131\4\12\32\0\4\12\4\0\11\12"+
+    "\1\132\13\12\32\0\4\12\4\0\10\12\1\133\14\12"+
+    "\32\0\4\12\4\0\3\12\1\134\21\12\32\0\4\12"+
+    "\4\0\1\135\24\12\16\0\6\136\2\0\6\136\1\0"+
+    "\35\136\1\0\12\136\5\0\1\137\4\0\1\112\72\0"+
+    "\2\115\63\0\4\12\4\0\1\140\24\12\32\0\4\12"+
+    "\4\0\10\12\1\141\14\12\32\0\4\12\4\0\13\12"+
+    "\1\142\11\12\32\0\4\12\4\0\1\143\24\12\32\0"+
+    "\4\12\4\0\20\12\1\144\4\12\32\0\4\12\4\0"+
+    "\3\12\1\145\21\12\32\0\4\12\4\0\1\146\24\12"+
+    "\32\0\4\12\4\0\16\12\2\147\5\12\32\0\4\12"+
+    "\4\0\21\12\1\150\3\12\32\0\4\12\4\0\13\12"+
+    "\1\151\11\12\16\0\1\152\3\136\4\152\2\136\55\152"+
+    "\1\137\1\0\4\137\1\153\1\137\2\0\55\137\14\0"+
+    "\4\12\4\0\6\12\2\154\15\12\32\0\4\12\4\0"+
+    "\1\155\24\12\32\0\4\12\4\0\10\12\1\156\14\12"+
+    "\32\0\4\12\4\0\13\12\1\157\11\12\32\0\4\12"+
+    "\4\0\11\12\1\160\13\12\32\0\4\12\4\0\1\161"+
+    "\24\12\32\0\4\12\4\0\14\12\1\162\10\12\32\0"+
+    "\4\12\4\0\23\12\2\163\16\0\1\152\2\0\5\152"+
+    "\2\0\55\152\1\137\1\0\4\137\1\153\1\137\2\0"+
+    "\1\137\1\164\53\137\14\0\4\12\4\0\15\12\1\165"+
+    "\7\12\32\0\4\12\4\0\14\12\1\166\10\12\32\0"+
+    "\4\12\4\0\3\12\1\167\21\12\32\0\4\12\4\0"+
+    "\6\12\2\170\15\12\16\0\1\137\1\0\4\137\1\171"+
+    "\1\137\2\0\55\137\14\0\4\12\4\0\2\12\1\172"+
+    "\22\12\32\0\4\12\4\0\3\12\1\173\21\12\16\0";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[4235];
@@ -370,13 +370,13 @@ public class LuaLexer implements java_cup.runtime.Scanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\2\1\3\11\23\1\12\11\3\1\1\11"+
+    "\1\0\1\11\2\1\4\11\23\1\12\11\3\1\1\11"+
     "\1\0\1\11\3\0\1\11\1\0\12\1\2\11\11\1"+
     "\3\11\2\0\1\1\1\0\1\1\1\11\20\1\1\0"+
     "\13\1\1\0\10\1\1\0\7\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[122];
+    int [] result = new int[123];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -846,209 +846,262 @@ public class LuaLexer implements java_cup.runtime.Scanner {
           case 1: 
             { /* Syntax Error */
             }
-          case 52: break;
+          case 53: break;
           case 2: 
             { System.out.printf(" MINUS"); return symbol(sym.MINUS, yychar, yyline );
             }
-          case 53: break;
+          case 54: break;
           case 3: 
             { System.out.printf(" OPEN_BRACKETS"); return symbol(sym.OPEN_BRACKETS, yychar, yyline );
             }
-          case 54: break;
+          case 55: break;
           case 4: 
             { System.out.printf(" CLOSE_BRACKETS"); return symbol(sym.CLOSE_BRACKETS, yychar, yyline );
             }
-          case 55: break;
+          case 56: break;
           case 5: 
             { System.out.printf(" CLOSE_BRACES"); return symbol(sym.CLOSE_BRACES, yychar, yyline );
             }
-          case 56: break;
-          case 6: 
-            { System.out.printf(" SIGN"); return symbol(sym.SIGN, yychar, yyline );
-            }
           case 57: break;
-          case 7: 
-            { System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline);
+          case 6: 
+            { System.out.print(yytext());
             }
           case 58: break;
-          case 8: 
-            { System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline);
+          case 7: 
+            { System.out.printf(" SIGN"); return symbol(sym.SIGN, yychar, yyline );
             }
           case 59: break;
-          case 9: 
-            { System.out.printf(" PLUS"); return symbol(sym.PLUS, yychar, yyline );
+          case 8: 
+            { System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline);
             }
           case 60: break;
-          case 10: 
-            { System.out.printf(" COMMA"); return symbol(sym.PERIOD, yychar, yyline );
+          case 9: 
+            { System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline);
             }
           case 61: break;
-          case 11: 
-            { System.out.printf(" COLON"); return symbol(sym.COLON, yychar, yyline );
+          case 10: 
+            { System.out.printf(" PLUS"); return symbol(sym.PLUS, yychar, yyline );
             }
           case 62: break;
-          case 12: 
-            { System.out.printf(" SEMICOLON"); return symbol(sym.SEMICOLON, yychar, yyline );
+          case 11: 
+            { System.out.printf(" COMMA"); return symbol(sym.PERIOD, yychar, yyline );
             }
           case 63: break;
-          case 13: 
-            { System.out.printf(" COMMA"); return symbol(sym.COMMA, yychar, yyline );
+          case 12: 
+            { System.out.printf(" COLON"); return symbol(sym.COLON, yychar, yyline );
             }
           case 64: break;
-          case 14: 
-            { System.out.printf(" OPEN_BRACES"); return symbol(sym.OPEN_BRACES, yychar, yyline );
+          case 13: 
+            { System.out.printf(" SEMICOLON"); return symbol(sym.SEMICOLON, yychar, yyline );
             }
           case 65: break;
-          case 15: 
-            { System.out.printf(" OPEN_PARENTHESES"); return symbol(sym.OPEN_PARENTHESES, yychar, yyline );
+          case 14: 
+            { System.out.printf(" COMMA"); return symbol(sym.COMMA, yychar, yyline );
             }
           case 66: break;
-          case 16: 
-            { System.out.printf(" CLOSE_PARENTHESES"); return symbol(sym.CLOSE_PARENTHESES, yychar, yyline );
+          case 15: 
+            { System.out.printf(" OPEN_BRACES"); return symbol(sym.OPEN_BRACES, yychar, yyline );
             }
           case 67: break;
-          case 17: 
-            { System.out.printf(" TIMES"); return symbol(sym.TIMES, yychar, yyline );
+          case 16: 
+            { System.out.printf(" OPEN_PARENTHESES"); return symbol(sym.OPEN_PARENTHESES, yychar, yyline );
             }
           case 68: break;
-          case 18: 
-            { System.out.printf(" DIV"); return symbol(sym.DIV, yychar, yyline );
+          case 17: 
+            { System.out.printf(" CLOSE_PARENTHESES"); return symbol(sym.CLOSE_PARENTHESES, yychar, yyline );
             }
           case 69: break;
-          case 19: 
-            { System.out.printf(" UP_CARET"); return symbol(sym.UP_CARET, yychar, yyline );
+          case 18: 
+            { System.out.printf(" TIMES"); return symbol(sym.TIMES, yychar, yyline );
             }
           case 70: break;
-          case 20: 
-            { System.out.printf(" PERCENT"); return symbol(sym.PERCENT, yychar, yyline );
+          case 19: 
+            { System.out.printf(" DIV"); return symbol(sym.DIV, yychar, yyline );
             }
           case 71: break;
-          case 21: 
-            { System.out.printf(" LESS_THAN"); return symbol(sym.LESS_THAN, yychar, yyline );
+          case 20: 
+            { System.out.printf(" UP_CARET"); return symbol(sym.UP_CARET, yychar, yyline );
             }
           case 72: break;
-          case 22: 
-            { System.out.printf(" GREATHER_THAN"); return symbol(sym.GREATHER_THAN, yychar, yyline );
+          case 21: 
+            { System.out.printf(" PERCENT"); return symbol(sym.PERCENT, yychar, yyline );
             }
           case 73: break;
-          case 23: 
-            { System.out.printf(" LENGTH"); return symbol(sym.LENGTH, yychar, yyline );
+          case 22: 
+            { System.out.printf(" LESS_THAN"); return symbol(sym.LESS_THAN, yychar, yyline );
             }
           case 74: break;
-          case 24: 
-            { System.out.printf(" EQUAL"); return symbol(sym.EQUAL, yychar, yyline );
+          case 23: 
+            { System.out.printf(" GREATHER_THAN"); return symbol(sym.GREATHER_THAN, yychar, yyline );
             }
           case 75: break;
-          case 25: 
-            { System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline);
+          case 24: 
+            { System.out.printf(" LENGTH"); return symbol(sym.LENGTH, yychar, yyline );
             }
           case 76: break;
-          case 26: 
-            { System.out.printf(" TWO_PERIOD"); return symbol(sym.TWO_PERIOD, yychar, yyline );
+          case 25: 
+            { System.out.printf(" EQUAL"); return symbol(sym.EQUAL, yychar, yyline );
             }
           case 77: break;
-          case 27: 
-            { System.out.printf(" DO"); return symbol(sym.DO, yychar, yyline);
+          case 26: 
+            { System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline);
             }
           case 78: break;
-          case 28: 
-            { System.out.printf(" OR"); return symbol(sym.OR, yychar, yyline);
+          case 27: 
+            { System.out.printf(" TWO_PERIOD"); return symbol(sym.TWO_PERIOD, yychar, yyline );
             }
           case 79: break;
-          case 29: 
-            { System.out.printf(" IN"); return symbol(sym.IN, yychar, yyline );
+          case 28: 
+            { System.out.printf(" DO"); return symbol(sym.DO, yychar, yyline);
             }
           case 80: break;
-          case 30: 
-            { System.out.printf(" IF"); return symbol(sym.IF, yychar, yyline );
+          case 29: 
+            { System.out.printf(" OR"); return symbol(sym.OR, yychar, yyline);
             }
           case 81: break;
-          case 31: 
-            { System.out.printf(" LESS_THAN_EQUAL"); return symbol(sym.LESS_THAN_EQUAL, yychar, yyline );
+          case 30: 
+            { System.out.printf(" IN"); return symbol(sym.IN, yychar, yyline );
             }
           case 82: break;
-          case 32: 
-            { System.out.printf(" GREATHER_THAN_EQUAL"); return symbol(sym.GREATHER_THAN_EQUAL, yychar, yyline );
+          case 31: 
+            { System.out.printf(" IF"); return symbol(sym.IF, yychar, yyline );
             }
           case 83: break;
-          case 33: 
-            { System.out.printf(" DIFFERENT"); return symbol(sym.DIFFERENT, yychar, yyline );
+          case 32: 
+            { System.out.printf(" LESS_THAN_EQUAL"); return symbol(sym.LESS_THAN_EQUAL, yychar, yyline );
             }
           case 84: break;
-          case 34: 
-            { System.out.printf(" ELLIPSIS"); return symbol(sym.ELLIPSIS, yychar, yyline );
+          case 33: 
+            { System.out.printf(" GREATHER_THAN_EQUAL"); return symbol(sym.GREATHER_THAN_EQUAL, yychar, yyline );
             }
           case 85: break;
-          case 35: 
-            { System.out.printf(" END"); return symbol(sym.END, yychar, yyline );
+          case 34: 
+            { System.out.printf(" DIFFERENT"); return symbol(sym.DIFFERENT, yychar, yyline );
             }
           case 86: break;
-          case 36: 
-            { System.out.printf(" NOT"); return symbol(sym.NOT, yychar, yyline );
+          case 35: 
+            { System.out.printf(" ELLIPSIS"); return symbol(sym.ELLIPSIS, yychar, yyline );
             }
           case 87: break;
-          case 37: 
-            { System.out.printf(" NIL"); return symbol(sym.NIL, yychar, yyline );
+          case 36: 
+            { System.out.printf(" END"); return symbol(sym.END, yychar, yyline );
             }
           case 88: break;
-          case 38: 
-            { System.out.printf(" AND"); return symbol(sym.AND, yychar, yyline );
+          case 37: 
+            { System.out.printf(" NOT"); return symbol(sym.NOT, yychar, yyline );
             }
           case 89: break;
-          case 39: 
-            { System.out.printf(" FOR"); return symbol(sym.FOR, yychar, yyline );
+          case 38: 
+            { System.out.printf(" NIL"); return symbol(sym.NIL, yychar, yyline );
             }
           case 90: break;
-          case 40: 
-            { System.out.printf(" COMMENT");
+          case 39: 
+            { System.out.printf(" AND"); return symbol(sym.AND, yychar, yyline );
             }
           case 91: break;
-          case 41: 
-            { System.out.printf(" ELSE"); return symbol(sym.ELSE, yychar, yyline );
+          case 40: 
+            { System.out.printf(" FOR"); return symbol(sym.FOR, yychar, yyline );
             }
           case 92: break;
-          case 42: 
-            { System.out.printf(" THEN"); return symbol(sym.THEN, yychar, yyline );
+          case 41: 
+            { System.out.printf(" COMMENT");
             }
           case 93: break;
-          case 43: 
-            { System.out.printf(" TRUE"); return symbol(sym.TRUE, yychar, yyline );
+          case 42: 
+            { System.out.printf(" ELSE"); return symbol(sym.ELSE, yychar, yyline );
             }
           case 94: break;
-          case 44: 
-            { System.out.printf(" WHILE"); return symbol(sym.WHILE, yychar, yyline );
+          case 43: 
+            { System.out.printf(" THEN"); return symbol(sym.THEN, yychar, yyline );
             }
           case 95: break;
-          case 45: 
-            { System.out.printf(" LOCAL"); return symbol(sym.LOCAL, yychar, yyline );
+          case 44: 
+            { System.out.printf(" TRUE"); return symbol(sym.TRUE, yychar, yyline );
             }
           case 96: break;
-          case 46: 
-            { System.out.printf(" FALSE"); return symbol(sym.FALSE, yychar, yyline );
+          case 45: 
+            { System.out.printf(" WHILE"); return symbol(sym.WHILE, yychar, yyline );
             }
           case 97: break;
-          case 47: 
-            { System.out.printf(" BREAK"); return symbol(sym.BREAK, yychar, yyline );
+          case 46: 
+            { System.out.printf(" LOCAL"); return symbol(sym.LOCAL, yychar, yyline );
             }
           case 98: break;
-          case 48: 
-            { System.out.printf(" ELSEIF"); return symbol(sym.ELSEIF, yychar, yyline );
+          case 47: 
+            { System.out.printf(" FALSE"); return symbol(sym.FALSE, yychar, yyline );
             }
           case 99: break;
-          case 49: 
-            { System.out.printf(" REPEAT"); return symbol(sym.REPEAT, yychar, yyline );
+          case 48: 
+            { System.out.printf(" BREAK"); return symbol(sym.BREAK, yychar, yyline );
             }
           case 100: break;
-          case 50: 
-            { System.out.printf(" RETURN"); return symbol(sym.RETURN, yychar, yyline );
+          case 49: 
+            { System.out.printf(" ELSEIF"); return symbol(sym.ELSEIF, yychar, yyline );
             }
           case 101: break;
-          case 51: 
-            { System.out.printf(" FUNCTION"); return symbol(sym.FUNCTION, yychar, yyline );
+          case 50: 
+            { System.out.printf(" REPEAT"); return symbol(sym.REPEAT, yychar, yyline );
             }
           case 102: break;
+          case 51: 
+            { System.out.printf(" RETURN"); return symbol(sym.RETURN, yychar, yyline );
+            }
+          case 103: break;
+          case 52: 
+            { System.out.printf(" FUNCTION"); return symbol(sym.FUNCTION, yychar, yyline );
+            }
+          case 104: break;
           default:
             zzScanError(ZZ_NO_MATCH);
+        }
+      }
+    }
+  }
+
+  /**
+   * Runs the scanner on input files.
+   *
+   * This is a standalone scanner, it will print any unmatched
+   * text to System.out unchanged.
+   *
+   * @param argv   the command line, contains the filenames to run
+   *               the scanner on.
+   */
+  public static void main(String argv[]) {
+    if (argv.length == 0) {
+      System.out.println("Usage : java LuaLexer [ --encoding <name> ] <inputfile(s)>");
+    }
+    else {
+      int firstFilePos = 0;
+      String encodingName = "UTF-8";
+      if (argv[0].equals("--encoding")) {
+        firstFilePos = 2;
+        encodingName = argv[1];
+        try {
+          java.nio.charset.Charset.forName(encodingName); // Side-effect: is encodingName valid? 
+        } catch (Exception e) {
+          System.out.println("Invalid encoding '" + encodingName + "'");
+          return;
+        }
+      }
+      for (int i = firstFilePos; i < argv.length; i++) {
+        LuaLexer scanner = null;
+        try {
+          java.io.FileInputStream stream = new java.io.FileInputStream(argv[i]);
+          java.io.Reader reader = new java.io.InputStreamReader(stream, encodingName);
+          scanner = new LuaLexer(reader);
+          while ( !scanner.zzAtEOF ) scanner.next_token();
+        }
+        catch (java.io.FileNotFoundException e) {
+          System.out.println("File not found : \""+argv[i]+"\"");
+        }
+        catch (java.io.IOException e) {
+          System.out.println("IO error scanning file \""+argv[i]+"\"");
+          System.out.println(e);
+        }
+        catch (Exception e) {
+          System.out.println("Unexpected exception:");
+          e.printStackTrace();
         }
       }
     }

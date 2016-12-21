@@ -16,6 +16,7 @@ import br.uff.compilers.luacompilers.sym;
 %cup
 %public
 %unicode
+%standalone
 %line
 %char
 %ignorecase
@@ -114,6 +115,7 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 {regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return symbol(sym.IDENTIFIER, yychar, yyline); }
 {regex_number} 			{ System.out.printf(" NUMBER"); return symbol(sym.NUMBER, yychar, yyline); }
 {regex_string} 			{ System.out.printf(" STRING"); return symbol(sym.STRING, yychar, yyline); }
+
 {LineTerminator}                { /* Syntax Error */ }
 {WhiteSpace}                    { /* Syntax Error */ }
 .                               { /* Syntax Error */ }
