@@ -121,7 +121,7 @@ tempchuck ::= stat:st semicolontemp:smcltp tempchuck:tpchuck
 
 laststattemp ::= laststat:ltstat semicolontemp:smcltp
         {:
-            Node root = new Node(new Toke("EOF"));
+            Node root = new Node(new Token("EOF"));
             root.addChildren(ltstat);
             root.addChildren(smcltp);
             RESULT = root;

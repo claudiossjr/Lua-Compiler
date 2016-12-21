@@ -48,13 +48,13 @@ public class MainClass {
                     System.out.println("Gerado!");
                     break;
                 case EXECUTAR: 
-                    String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/thais.vini";
+                    String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/program.txt";
                     String[] argsLuaParser = {nomeDoArquivo};
                     LuaParser.main(argsLuaParser);
                     System.out.println("Executado!");
                     break;
                 case LEXER:
-                    String nomeDoArquivoLexer = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/thais.vini";
+                    String nomeDoArquivoLexer = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/program.txt";
                     String[] argsLuaLexer = {nomeDoArquivoLexer};
                     LuaLexer.main(argsLuaLexer);
                     System.out.println("Executado!");
