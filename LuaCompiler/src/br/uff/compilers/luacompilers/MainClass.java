@@ -48,7 +48,7 @@ public class MainClass {
                     System.out.println("Gerado!");
                     break;
                 case EXECUTAR: 
-                    String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/program.txt";
+                    String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/thais.vini";
                     String[] argsLuaParser = {nomeDoArquivo};
                     LuaParser.main(argsLuaParser);
                     System.out.println("Executado!");

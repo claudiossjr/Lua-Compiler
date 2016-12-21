@@ -112,11 +112,14 @@ chuck ::= tempchuck:tpchuck laststattemp:ltstattp
 
 tempchuck ::= stat:st semicolontemp:smcltp tempchuck:tpchuck
         {:
-            smcltp.addChildren(st);
-            smcltp.addChildren(tpchuck);
-            RESULT = smcltp;
+            Node node = new Node("EOL");
+            node.addChildren(st);
+            node.addChildren(smcltp);
+            node.addChildren(tpchuck);
+            RESULT = node;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 laststattemp ::= laststat:ltstat semicolontemp:smcltp
@@ -127,6 +130,7 @@ laststattemp ::= laststat:ltstat semicolontemp:smcltp
             RESULT = root;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 block ::= chuck:ch
@@ -250,6 +254,7 @@ elseiftemp ::= ELSEIF:elseif exp:exp THEN:then block:block elseiftemp:elseiftemp
             RESULT = eif;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 elsetemp ::=  ELSE:els block:block
@@ -268,6 +273,7 @@ signexplisttemp ::= SIGN:sign explist:explist
             RESULT = sgn;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 laststat ::= RETURN:ret explisttemp:explisttemp
@@ -287,14 +293,15 @@ explisttemp ::= explist:explist
             RESULT = explist;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 funcname ::= IDENTIFIER:id periodidentifiertemp:periodidentifiertemp twoperiodidentifertemp:twoperiodidentifertemp
         {:
-            // Node id = new Node(id);
-            periodidentifiertemp.addChildren(id);
-            periodidentifiertemp.addChildren(twoperiodidentifertemp);
-            RESULT = periodidentifiertemp;
+            Node node = new Node(id);
+            node.addChildren(periodidentifiertemp);
+            node.addChildren(twoperiodidentifertemp);
+            RESULT = node;
         :}
         ;
 
@@ -307,6 +314,7 @@ periodidentifiertemp ::= PERIOD:period IDENTIFIER:id periodidentifiertemp:period
             RESULT = periodidentifiertemp;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 twoperiodidentifertemp ::= TWO_PERIOD:twoperiod IDENTIFIER:id
@@ -317,6 +325,7 @@ twoperiodidentifertemp ::= TWO_PERIOD:twoperiod IDENTIFIER:id
             RESULT = idx;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 varlist ::= var:var commavartemp:commavartemp
@@ -354,9 +363,9 @@ vartemp ::= PERIOD:period IDENTIFIER:id
 
 namelist ::= IDENTIFIER:id commaidentifiertemp:commaidentifiertemp
         {:
-        // Node id = new Node(id);
-        commaidentifiertemp.addChildren(id);
-        RESULT = commaidentifiertemp;
+            Node node = new Node(id);
+            node.addChildren(commaidentifiertemp);
+            RESULT = node;
         :}
         ;
 
@@ -401,6 +410,7 @@ parlisttemp ::= parlist:parlist
             RESULT = parlist;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 parlist ::= namelist:namelist commaellipsistemp:commaellipsistemp
@@ -440,9 +450,9 @@ fieldsepfieldtemp ::= fieldsep:fieldsep field:field fieldsepfieldtemp:fieldsepfi
             fieldsepfieldtemp.addChildren(fieldsep);
             fieldsepfieldtemp.addChildren(field);
             RESULT = fieldsepfieldtemp;
-        :}
-        
+        :}        
         |
+        {: RESULT = new Node(); :}
         ;
 
 field ::= OPEN_BRACKETS:openB exp:exp1 CLOSE_BRACKETS:closeB SIGN:sign exp:exp2
@@ -467,6 +477,7 @@ field ::= OPEN_BRACKETS:openB exp:exp1 CLOSE_BRACKETS:closeB SIGN:sign exp:exp2
           RESULT = exp;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
             
 binop ::= PLUS:plus
@@ -573,8 +584,9 @@ commaellipsistemp ::= COMMA:comma ELLIPSIS:ellipsis
         Node ell = new Node(ellipsis);
         ell.addChildren(comma);
         RESULT = ell;
-:}
+        :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 expcommatemp ::= COMMA:comma exp:exp expcommatemp:expcommatemp
@@ -585,17 +597,18 @@ expcommatemp ::= COMMA:comma exp:exp expcommatemp:expcommatemp
             RESULT = expcommatemp;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 commaidentifiertemp ::= COMMA:comma IDENTIFIER:id commaidentifiertemp:commaidentifiertemp
         {:
-            // Node comma = new Node(comma);
-            // Node id = new Node(id);
-            commaidentifiertemp.addChildren(comma);
-            commaidentifiertemp.addChildren(id);
-            RESULT = commaidentifiertemp;
+            Node node = new Node(comma);
+            node.addChildren(id);
+            node.addChildren(commaidentifiertemp);
+            RESULT = node;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 commavartemp ::= COMMA:comma var:var commavartemp:commavartemp
@@ -606,6 +619,7 @@ commavartemp ::= COMMA:comma var:var commavartemp:commavartemp
             RESULT = commavartemp;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 commaexptemp ::= COMMA:comma exp:exp
@@ -615,6 +629,7 @@ commaexptemp ::= COMMA:comma exp:exp
             RESULT = exp;
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 args ::= OPEN_PARENTHESES:openP explisttemp:explisttemp CLOSE_PARENTHESES:closeP

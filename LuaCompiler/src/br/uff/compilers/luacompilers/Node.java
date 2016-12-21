@@ -8,7 +8,7 @@ public class Node {
     private List<Node> children;
     
     public Node(){
-        
+        this(null);
     }
     
     public Node(Token info) {
