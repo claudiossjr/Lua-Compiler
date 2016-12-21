@@ -117,9 +117,9 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 "not"					{ System.out.printf(" NOT"); return new Symbol(sym.NOT, createToken(yytext()) ); }
 "#"					{ System.out.printf(" LENGTH"); return new Symbol(sym.LENGTH, createToken(yytext()) ); }
  
-{regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return new Symbol(sym.IDENTIFIER, createToken(yytext())); }
-{regex_number} 			{ System.out.printf(" NUMBER"); return new Symbol(sym.NUMBER, createToken(yytext())); }
-{regex_string} 			{ System.out.printf(" STRING"); return new Symbol(sym.STRING, createToken(yytext())); }
+{regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return new Symbol(sym.IDENTIFIER, createToken(yytext()) ); }
+{regex_number} 			{ System.out.printf(" NUMBER"); return new Symbol(sym.NUMBER, createToken(yytext()) ); }
+{regex_string} 			{ System.out.printf(" STRING"); return new Symbol(sym.STRING, createToken(yytext()) ); }
 
 {LineTerminator}                { /* Syntax Error */ }
 {WhiteSpace}                    { /* Syntax Error */ }
