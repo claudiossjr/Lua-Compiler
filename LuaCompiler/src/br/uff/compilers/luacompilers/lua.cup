@@ -103,7 +103,7 @@ start with chuck;
 
 chuck ::= tempchuck:tempchuck laststattemp:laststattemp
         {:
-            tempchuck.addCHildren(laststattemp);
+            tempchuck.addChildren(laststattemp);
             RESULT = tempchuck;
         :}
         ;
@@ -127,164 +127,166 @@ laststattemp ::= laststat:laststat semicolontemp:semicolontemp
 
 block ::= chuck:chuck
         {:
-            RESULT chuck;
+            RESULT = chuck;
         :}
           ;
 
 stat ::= varlist:varlist SIGN:sign explist:explist
         {:
-            // Node sign = new Node(sign);
-            sign.addChildren(varlist);
-            sign.addChildren(explist);
-            RESULT = sign;
+            Node sgn = new Node(sign);
+            sgn.addChildren(varlist);
+            sgn.addChildren(explist);
+            RESULT = sgn;
         :}
         | prefixexp:prefixexp
         {:
             RESULT = prefixexp;
         :}
-        | DO:do block:block END:end
+        | DO:d block:block END:end
         {:
-            Node do = new Node(do);
-            Node end = new Node(end);
-            do.addChildren(block);
-            do.addChildren(end);
-            RESULT = do;
+            Node d1 = new Node(d);
+            //Node end = new Node(end);
+            d1.addChildren(block);
+            d1.addChildren(end);
+            RESULT = d1;
         :}
-        | WHILE:while exp:exp DO:do block:block END:end
+        | WHILE:wl exp:exp DO:d block:block END:end
         {:
-            Node while = new Node(while);
-            Node do = new Node(do);
-            Node end = new Node(end);
-            while.addChildren(exp);
-            do.addChildren(block);
-            while.addChildren(do);
-            while.addChildren(end);
-            RESULT = while;
+            Node wle = new Node(wl);
+            Node d1 = new Node(d);
+           // Node end = new Node(end);
+            wle.addChildren(exp);
+            d1.addChildren(block);
+            wle.addChildren(d1);
+            wle.addChildren(end);
+            RESULT = wle;
         :}
         | REPEAT:repeat block:block UNTIL:until exp:exp
         {:
-            Node repeat = new Node(repeat);
-            Node until = new Node(until);
-            repeat.addChildren(block);
-            repeat.addChildren(until);
-            repeat.addChildren(exp);
-            RESULT = repeat;
+            Node rpt = new Node(repeat);
+            //Node utl = new Node(until);
+            rpt.addChildren(block);
+            rpt.addChildren(until);
+            rpt.addChildren(exp);
+            RESULT = rpt;
         :}
         | ifstatment:id
         {:
             RESULT = id;
         :}
-        | FOR:for IDENTIFIER:id SIGN:sign exp:exp1 COMMA:comma exp:exp2 commaexptemp:commaexptemp DO:do block:block END:end
+        | FOR:fr IDENTIFIER:id SIGN:sign exp:exp1 COMMA:comma exp:exp2 commaexptemp:commaexptemp DO:d block:block END:end
         {:
-            Node for = new Node(for);
+            Node f = new Node(fr);
             // Node id = new Node(id);
             // Node sign = new Node(sign); 
             // Node comma = new Node(comma);
-            Node do = new Node(do);
-            Node end = new Node(end);
-            for.addChildren(id);
-            for.addChildren(sign);
-            for.addChildren(exp1);
-            for.addChildren(comma);
-            for.addChildren(exp2);
-            for.addChildren(commaexptemp);
-            do.addChildren(block);
-            for.addChildren(do);
-            for.addChildren(end);
-            RESULT = for;
+            Node d1 = new Node(d);
+            //Node end = new Node(end);
+            f.addChildren(id);
+            f.addChildren(sign);
+            f.addChildren(exp1);
+            f.addChildren(comma);
+            f.addChildren(exp2);
+            f.addChildren(commaexptemp);
+            d1.addChildren(block);
+            f.addChildren(d1);
+            f.addChildren(end);
+            RESULT = f;
         :}
-        | FOR:for namelist:namelist IN:in explist:explist DO:do block:block END:end
+        | FOR:fr namelist:namelist IN:in explist:explist DO:d block:block END:end
         {:
-            Node for = new Node(for);
-            Node in = new Node(in);
-            Node do = new Node(do);
-            Node end = new Node(end);
-            for.addChildren(namelist);
-            for.addChildren(in);
-            do.addChildren(block);
-            for.addChildren(do);
-            for.addChildren(end);
-            RESULT = for;
+            Node f = new Node(fr);
+            //Node in = new Node(in);
+            Node d1 = new Node(d);
+            //Node end = new Node(end);
+            f.addChildren(namelist);
+            f.addChildren(in);
+            d1.addChildren(block);
+            f.addChildren(d1);
+            f.addChildren(end);
+            RESULT = f;
+
         :}
         | FUNCTION:function funcname:funcname funcbody:funcbody
         {:
-            // Node function = new Node(function);
-            function.addChildren(funcname);
-            function.addChildren(funcbody);
-            RESULT = function;
+            Node func = new Node(function);
+            func.addChildren(funcname);
+            func.addChildren(funcbody);
+            RESULT = func;
         :}
         | LOCAL:local FUNCTION:function IDENTIFIER:id funcbody:funcbody
         {:
-            Node local = new Node(local);
-            // Node function = new Node(function);
+            Node lcl = new Node(local);
+            Node func = new Node(function);
             // Node id = new Node(id);
-            function.addChildren(id);
-            function.addChildren(funcbody);
-            local.addChildren(function);
-            RESULT = local;
+            func.addChildren(id);
+            func.addChildren(funcbody);
+            lcl.addChildren(func);
+            RESULT = lcl;
         :}
         | LOCAL:local namelist:namelist signexplisttemp:signexplisttemp
         {:
-            Node local = new Node(local);
-            local.addChildren(namelist);
-            local.addChildren(signexplisttemp);
-            RESULT = local;
+            Node lcl = new Node(local);
+            lcl.addChildren(namelist);
+            lcl.addChildren(signexplisttemp);
+            RESULT = lcl;
         :}
         ;
 
-ifstatment ::= IF:if exp:exp THEN:then block:block elseiftemp:elseiftemp elsetemp:elsetemp END:end
+ifstatment ::= IF:ifs exp:exp THEN:then block:block elseiftemp:elseiftemp elsetemp:elsetemp END:end
         {:
-            Node if = new Node(if);
-            if.addChildren(exp);
-            then.addChildren(block);
-            if.addChildren(then);
-            if.addChildren(elseiftemp);
-            if.addChildren(elsetemp);
-            if.addChildren(end);
-            RESULT = id;
+            Node if1 = new Node(ifs);
+            if1.addChildren(exp);
+            Node t = new Node(then);
+            t.addChildren(block);
+            if1.addChildren(t);
+            if1.addChildren(elseiftemp);
+            if1.addChildren(elsetemp);
+            if1.addChildren(end);
+            RESULT = if1;
         :}
         ;
 
 elseiftemp ::= ELSEIF:elseif exp:exp THEN:then block:block elseiftemp:elseiftemp
         {:
-            Node elseif = new Node(elseif);
-            Node then = new Node(then);
-            elseif.addChildren(exp);
-            then.addChildren(block);
-            then.addChildren(elseiftemp);
-            elseif.addChildren(then);
-            RESULT = elseif;
+            Node eif = new Node(elseif);
+            Node t = new Node(then);
+            eif.addChildren(exp);
+            t.addChildren(block);
+            t.addChildren(elseiftemp);
+            eif.addChildren(t);
+            RESULT = eif;
         :}
         |
         ;
 
-elsetemp ::=  ELSE:else block:block
+elsetemp ::=  ELSE:els block:block
         {:
-            Node else = new Node(else);
-            block.addChildren(else);
-            RESULT = block;
+            Node e = new Node(els);
+            e.addChildren(block);
+            RESULT = e;
         :}
         |
         ;
 
 signexplisttemp ::= SIGN:sign explist:explist
         {:
-            // Node sign = new Node(sign);
-            sign.addChildren(explist);
-            RESULT = sign;
+            Node sgn = new Node(sign);
+            sgn.addChildren(explist);
+            RESULT = sgn;
         :}
         |
         ;
 
-laststat ::= RETURN:return explisttemp:explisttemp
+laststat ::= RETURN:ret explisttemp:explisttemp
         {:
-            Node return = new Node(return);
-            return.addChildren(explisttemp);
-            RESULT = return;
+            Node r = new Node(ret);
+            r.addChildren(explisttemp);
+            RESULT = r;
         :}
-        | BREAK:break
+        | BREAK:bk
         {:
-            RESULT new Node(break);
+            RESULT = new Node(bk);
         :}
         ;
 
@@ -306,8 +308,8 @@ funcname ::= IDENTIFIER:id periodidentifiertemp:periodidentifiertemp twoperiodid
 
 periodidentifiertemp ::= PERIOD:period IDENTIFIER:id periodidentifiertemp:periodidentifiertemp
         {:
-            Node period = new Node(period);
-            Node id = Node(id);
+            //Node p = new Node(period);
+            //Node id = Node(id);
             periodidentifiertemp.addChildren(period);
             periodidentifiertemp.addChildren(id);
             RESULT = periodidentifiertemp;
@@ -317,10 +319,10 @@ periodidentifiertemp ::= PERIOD:period IDENTIFIER:id periodidentifiertemp:period
 
 twoperiodidentifertemp ::= TWO_PERIOD:twoperiod IDENTIFIER:id
         {:  
-            Node twoperiod = new Node(twoperiod);
-            // Node id = new Node(id);
-            id.addChildren(twoperiod);
-            RESULT = id;
+            //Node twoperiod = new Node(twoperiod);
+            Node idx = new Node(id);
+            idx.addChildren(twoperiod);
+            RESULT = idx;
         :}
         |
         ;
@@ -345,10 +347,10 @@ var ::= IDENTIFIER:id
 
 vartemp ::= PERIOD:period IDENTIFIER:id
         {:
-            Node period = new Node(period);
+            Node p = new Node(period);
             // Node id = new Node(id);
-            period.addChildren(id);
-            RESULT = period;
+            p.addChildren(id);
+            RESULT = p;
         :}
         | OPEN_BRACKETS:openB exp:exp CLOSE_BRACKETS:closeB
         {:
@@ -382,7 +384,7 @@ functioncall ::= prefixexp:prefixexp functioncalltemp:functioncalltemp
 
 functioncalltemp ::= COLON:colon IDENTIFIER:id args:args
             {:
-             Node colon = new Node(colon);
+             // Node colon = new Node(colon);
              // Node id = new Node(id);
              args.addChildren(colon);
              args.addChildren(id);
@@ -445,7 +447,7 @@ fieldlist ::= field:field fieldsepfieldtemp:fieldsepfieldtemp
 
 fieldsepfieldtemp ::= fieldsep:fieldsep field:field fieldsepfieldtemp:fieldsepfieldtemp 
         {:
-            fieldsepfieldtemp.addChildren(fieldesp);
+            fieldsepfieldtemp.addChildren(fieldsep);
             fieldsepfieldtemp.addChildren(field);
             RESULT = fieldsepfieldtemp;
         :}
@@ -457,15 +459,15 @@ field ::= OPEN_BRACKETS:openB exp:exp1 CLOSE_BRACKETS:closeB SIGN:sign exp:exp2
         {:
             exp1.addChildren(openB);
             exp1.addChildren(closeB);
-            // Node sign = new Node(sign);
-            sign.addChildren(exp1);
-            sign.addChildren(exp2);
-            RESULT = sign;
+            Node sgn = new Node(sign);
+            sgn.addChildren(exp1);
+            sgn.addChildren(exp2);
+            RESULT = sgn;
         :}
         | IDENTIFIER:id SIGN:sign exp:exp
         {:
             // Node id = new Node(id);
-            // Node sign = new Node(sign);
+            // Node sgn = new Node(sign);
             exp.addChildren(id);
             exp.addChildren(sign);
             RESULT = exp;
@@ -581,9 +583,9 @@ fieldsep ::= COMMA:comma
 commaellipsistemp ::= COMMA:comma ELLIPSIS:ellipsis 
         {:
         // Node comma = new Node(comma);
-        // Node ellipsis = new Node(ellipsis);
-        ellipsis.addChildren(comma);
-        RESULT = ellipsis;
+        Node ell = new Node(ellipsis);
+        ell.addChildren(comma);
+        RESULT = ell;
 :}
         |
         ;
@@ -690,11 +692,11 @@ exptemp ::= NIL:nil
 
         | ELLIPSIS:ellipsis
         {:
-             RESULT = new Node(ellipsis);
+           RESULT = new Node(ellipsis);
         :}
 
-        | function:function
-        {: RESULT = function; :}
+        | FUNCTION:function
+        {: RESULT = new Node(function); :}
 
         | prefixexp:prefixexp
         {: RESULT = prefixexp; :}
