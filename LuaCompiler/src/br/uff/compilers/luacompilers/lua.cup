@@ -1,0 +1,718 @@
+package br.uff.compilers.luacompilers;
+
+import java_cup.runtime.*;
+import java.io.FileReader;
+
+parser code
+{:
+    // Funções chamadas em erros ///////////////////////////////////////////////////////////////////////////
+    public void syntax_error(Symbol s){ 
+        System.out.println("\nOcorreu um erro na linha " + (s.right) +", coluna "+s.left+ ". Identificador "
+        +s.value + " não reconhecido." );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("\nOcorreu um erro na linha " + (s.right)+ ", coluna "+s.left+". Identificador " +
+        s.value + " não reconhecido.");
+    }
+    
+    public static void main(String[] args){
+        try {
+            LuaParser parser = new LuaParser(new LuaLexer(new FileReader(args[0])));
+            Object result = parser.parse().value;
+            System.out.println("*** Resultados finais ***");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+:}
+
+
+/* Terminal */
+terminal Token DO, END, WHILE, REPEAT, IF, THEN, ELSE, ELSEIF, FOR, IN, UNTIL;
+terminal Token FUNCTION, LOCAL, RETURN, BREAK;
+terminal Token NIL, FALSE, TRUE, ELLIPSIS;
+terminal Token COLON, SEMICOLON, COMMA, OPEN_BRACKETS, CLOSE_BRACKETS, OPEN_BRACES, CLOSE_BRACES, OPEN_PARENTHESES, CLOSE_PARENTHESES;
+terminal Token SIGN, PLUS, MINUS, TIMES, DIV, UP_CARET, PERCENT, TWO_PERIOD, PERIOD;
+terminal Token LESS_THAN, LESS_THAN_EQUAL, GREATHER_THAN, GREATHER_THAN_EQUAL, EQUAL, DIFFERENT;
+terminal Token AND, OR, NOT, LENGTH;
+terminal Token NUMBER, STRING, IDENTIFIER;
+
+non terminal Node chuck;
+non terminal Node block;
+non terminal Node stat;
+non terminal Node laststat;
+non terminal Node funcname;
+non terminal Node varlist;
+non terminal Node var;
+non terminal Node namelist;
+non terminal Node explist;
+non terminal Node exp;
+non terminal Node prefixexp;
+non terminal Node functioncall;
+non terminal Node args;
+non terminal Node function;
+non terminal Node funcbody;
+non terminal Node parlist;
+non terminal Node tableconstructor;
+non terminal Node fieldlist;
+non terminal Node field;
+non terminal Node fieldsep;
+non terminal Node binop;
+non terminal Node unop;
+
+non terminal Node semicolontemp;
+non terminal Node tempchuck;
+non terminal Node laststattemp;
+non terminal Node elseiftemp;
+non terminal Node elsetemp;
+non terminal Node commaexptemp;
+non terminal Node signexplisttemp;
+non terminal Node explisttemp;
+non terminal Node periodidentifiertemp;
+non terminal Node commavartemp;
+non terminal Node commaidentifiertemp;
+non terminal Node expcommatemp;
+non terminal Node parlisttemp;
+non terminal Node commaellipsistemp;
+non terminal Node fieldlisttemp;
+non terminal Node fieldsepfieldtemp;
+non terminal Node twoperiodidentifertemp;
+non terminal Node ifstatment;
+non terminal Node functioncalltemp;
+non terminal Node vartemp;
+non terminal Node exptemp;
+
+
+/* Precedences */
+
+precedence left OR;
+precedence left AND;
+precedence left LESS_THAN, GREATHER_THAN, LESS_THAN_EQUAL, GREATHER_THAN_EQUAL, DIFFERENT , EQUAL;
+precedence right TWO_PERIOD;
+precedence left PLUS, MINUS;
+precedence left TIMES, DIV, PERCENT;
+precedence left NOT;
+precedence right UP_CARET;
+precedence left COMMA;
+precedence left OPEN_PARENTHESES;
+
+start with chuck;
+
+chuck ::= tempchuck:tpchuck laststattemp:ltstattp
+        {:
+            Node root = new Node(new Token("EOF"));
+            root.addChildren(tpchuck);
+            root.addChildren(ltstattp);
+            RESULT = root;
+        :}
+        ;
+
+tempchuck ::= stat:st semicolontemp:smcltp tempchuck:tpchuck
+        {:
+            smcltp.addChildren(st);
+            smcltp.addChildren(tpchuck);
+            RESULT = smcltp;
+        :}
+        |
+        ;
+
+laststattemp ::= laststat:ltstat semicolontemp:smcltp
+        {:
+            Node root = new Node(new Token("EOF"));
+            root.addChildren(ltstat);
+            root.addChildren(smcltp);
+            RESULT = root;
+        :}
+        |
+        ;
+
+block ::= chuck:ch
+        {:
+            RESULT = ch;
+        :}
+          ;
+
+stat ::= varlist:vlist SIGN:sign explist:elist
+        {:
+            Node sgn = new Node(sign);
+            sgn.addChildren(vlist);
+            sgn.addChildren(elist);
+            RESULT = sgn;
+        :}
+        | prefixexp:preexp
+        {:
+            RESULT = preexp;
+        :}
+        | DO:d block:bl END:en
+        {:
+            Node d1 = new Node(d);
+            d1.addChildren(bl);
+            d1.addChildren(en);
+            RESULT = d1;
+        :}
+        | WHILE:wl exp:exp DO:d block:block END:end
+        {:
+            Node wle = new Node(wl);
+            Node d1 = new Node(d);
+            //Node end = new Node(end);
+            wle.addChildren(exp);
+            d1.addChildren(block);
+            wle.addChildren(d1);
+            wle.addChildren(end);
+            RESULT = wle;
+        :}
+        | REPEAT:repeat block:block UNTIL:until exp:exp
+        {:
+            Node node = new Node(repeat);
+            node.addChildren(block);
+            node.addChildren(until);
+            node.addChildren(exp);
+            RESULT = node;
+        :}
+        | ifstatment:ifstat
+        {:
+            RESULT = ifstat;
+        :}
+        | FOR:fr IDENTIFIER:id SIGN:sign exp:exp1 COMMA:comma exp:exp2 commaexptemp:commaexptemp DO:d block:block END:end
+        {:
+            Node node = new Node(fr);
+            node.addChildren(id);
+            node.addChildren(sign);
+            node.addChildren(exp1);
+            node.addChildren(comma);
+            node.addChildren(exp2);
+            node.addChildren(commaexptemp);
+            node.addChildren(d);
+            node.addChildren(block);
+            node.addChildren(end);
+            RESULT = node;
+        :}
+        | FOR:fr namelist:namelist IN:in explist:explist DO:d block:block END:end
+        {:
+            Node node = new Node(fr);
+            node.addChildren(namelist);
+            node.addChildren(in);
+            node.addChildren(explist);
+            node.addChildren(d);
+            node.addChildren(block);
+            node.addChildren(end);
+            RESULT = node;
+        :}
+        | FUNCTION:fun funcname:fname funcbody:fbody
+        {:
+            Node node = new Node(fun);
+            node.addChildren(fname);
+            node.addChildren(fbody);
+            RESULT = node;
+        :}
+        | LOCAL:local FUNCTION:fun IDENTIFIER:id funcbody:fbody
+        {:
+            Node node = new Node(local);
+            node.addChildren(fun);
+            node.addChildren(id);
+            node.addChildren(fbody);
+            RESULT = node;
+        :}
+        | LOCAL:local namelist:namelist signexplisttemp:signexplisttemp
+        {:
+            Node node = new Node(local);
+            node.addChildren(namelist);
+            node.addChildren(signexplisttemp);
+            RESULT = node;
+        :}
+        ;
+
+ifstatment ::= IF:ifs exp:exp THEN:then block:block elseiftemp:elseiftemp elsetemp:elsetemp END:end
+        {:
+            Node if1 = new Node(ifs);
+            if1.addChildren(exp);
+            Node t = new Node(then);
+            t.addChildren(block);
+            if1.addChildren(t);
+            if1.addChildren(elseiftemp);
+            if1.addChildren(elsetemp);
+            if1.addChildren(end);
+            RESULT = if1;
+        :}
+        ;
+
+elseiftemp ::= ELSEIF:elseif exp:exp THEN:then block:block elseiftemp:elseiftemp
+        {:
+            Node eif = new Node(elseif);
+            Node t = new Node(then);
+            eif.addChildren(exp);
+            t.addChildren(block);
+            t.addChildren(elseiftemp);
+            eif.addChildren(t);
+            RESULT = eif;
+        :}
+        |
+        ;
+
+elsetemp ::=  ELSE:els block:block
+        {:
+            Node e = new Node(els);
+            e.addChildren(block);
+            RESULT = e;
+        :}
+        |
+        ;
+
+signexplisttemp ::= SIGN:sign explist:explist
+        {:
+            Node sgn = new Node(sign);
+            sgn.addChildren(explist);
+            RESULT = sgn;
+        :}
+        |
+        ;
+
+laststat ::= RETURN:ret explisttemp:explisttemp
+        {:
+            Node r = new Node(ret);
+            r.addChildren(explisttemp);
+            RESULT = r;
+        :}
+        | BREAK:bk
+        {:
+            RESULT = new Node(bk);
+        :}
+        ;
+
+explisttemp ::= explist:explist
+        {:
+            RESULT = explist;
+        :}
+        |
+        ;
+
+funcname ::= IDENTIFIER:id periodidentifiertemp:periodidentifiertemp twoperiodidentifertemp:twoperiodidentifertemp
+        {:
+            // Node id = new Node(id);
+            periodidentifiertemp.addChildren(id);
+            periodidentifiertemp.addChildren(twoperiodidentifertemp);
+            RESULT = periodidentifiertemp;
+        :}
+        ;
+
+periodidentifiertemp ::= PERIOD:period IDENTIFIER:id periodidentifiertemp:periodidentifiertemp
+        {:
+            //Node p = new Node(period);
+            //Node id = Node(id);
+            periodidentifiertemp.addChildren(period);
+            periodidentifiertemp.addChildren(id);
+            RESULT = periodidentifiertemp;
+        :}
+        |
+        ;
+
+twoperiodidentifertemp ::= TWO_PERIOD:twoperiod IDENTIFIER:id
+        {:  
+            //Node twoperiod = new Node(twoperiod);
+            Node idx = new Node(id);
+            idx.addChildren(twoperiod);
+            RESULT = idx;
+        :}
+        |
+        ;
+
+varlist ::= var:var commavartemp:commavartemp
+        {:
+            commavartemp.addChildren(var);
+            RESULT = commavartemp;
+        :}
+        ;
+
+var ::= IDENTIFIER:id
+    {:
+        RESULT = new Node(id);
+    :}
+    | prefixexp:prefixexp vartemp:vartemp
+    {:
+        vartemp.addChildren(prefixexp);
+        RESULT = vartemp;
+    :}
+    ;
+
+vartemp ::= PERIOD:period IDENTIFIER:id
+        {:
+            Node p = new Node(period);
+            // Node id = new Node(id);
+            p.addChildren(id);
+            RESULT = p;
+        :}
+        | OPEN_BRACKETS:openB exp:exp CLOSE_BRACKETS:closeB
+        {:
+            exp.addChildren(openB);
+            exp.addChildren(closeB);
+            RESULT = exp;
+        :}
+        ;
+
+namelist ::= IDENTIFIER:id commaidentifiertemp:commaidentifiertemp
+        {:
+        // Node id = new Node(id);
+        commaidentifiertemp.addChildren(id);
+        RESULT = commaidentifiertemp;
+        :}
+        ;
+
+explist ::= exp:exp expcommatemp:expcommatemp
+        {:
+            expcommatemp.addChildren(exp);
+            RESULT = expcommatemp;
+        :}
+        ;
+
+functioncall ::= prefixexp:prefixexp functioncalltemp:functioncalltemp
+            {: 
+                functioncalltemp.addChildren(prefixexp);
+                RESULT = functioncalltemp;
+            :}
+            ;
+
+functioncalltemp ::= COLON:colon IDENTIFIER:id args:args
+            {:
+                // Node colon = new Node(colon);
+                // Node id = new Node(id);
+                args.addChildren(colon);
+                args.addChildren(id);
+                RESULT = args;
+            :}
+            | args:args
+            {:
+                RESULT = args;
+            :}
+            ;
+
+function ::= FUNCTION:function funcbody:funcbody
+            {:
+                // Node function = new Node(function);
+                funcbody.addChildren(function);
+                RESULT = funcbody;
+            :}
+          ;
+
+parlisttemp ::= parlist:parlist
+        {:
+            RESULT = parlist;
+        :}
+        |
+        ;
+
+parlist ::= namelist:namelist commaellipsistemp:commaellipsistemp
+        {:
+            commaellipsistemp.addChildren(namelist);
+            RESULT = commaellipsistemp;
+        :}
+        | ELLIPSIS:ellipsis
+        {:
+             RESULT = new Node(ellipsis);
+        :}
+        ;
+
+tableconstructor ::=  OPEN_BRACES:openB fieldlisttemp:fieldlisttemp CLOSE_BRACES:closeB
+        {:
+            fieldlisttemp.addChildren(openB);
+            fieldlisttemp.addChildren(closeB);
+            RESULT = fieldlisttemp;
+        :}
+        ;
+
+fieldlisttemp ::= fieldlist:fieldlist
+        {:
+            RESULT = fieldlist;
+        :}
+        ;
+
+fieldlist ::= field:field fieldsepfieldtemp:fieldsepfieldtemp
+        {:
+            fieldsepfieldtemp.addChildren(field);
+            RESULT = fieldsepfieldtemp;
+        :}
+        ;
+
+fieldsepfieldtemp ::= fieldsep:fieldsep field:field fieldsepfieldtemp:fieldsepfieldtemp 
+        {:
+            fieldsepfieldtemp.addChildren(fieldsep);
+            fieldsepfieldtemp.addChildren(field);
+            RESULT = fieldsepfieldtemp;
+        :}
+        
+        |
+        ;
+
+field ::= OPEN_BRACKETS:openB exp:exp1 CLOSE_BRACKETS:closeB SIGN:sign exp:exp2
+        {:
+            exp1.addChildren(openB);
+            exp1.addChildren(closeB);
+            Node sgn = new Node(sign);
+            sgn.addChildren(exp1);
+            sgn.addChildren(exp2);
+            RESULT = sgn;
+        :}
+        | IDENTIFIER:id SIGN:sign exp:exp
+        {:
+            // Node id = new Node(id);
+            // Node sgn = new Node(sign);
+            exp.addChildren(id);
+            exp.addChildren(sign);
+            RESULT = exp;
+        :}
+        | exp:exp
+        {:
+          RESULT = exp;
+        :}
+        |
+        ;
+            
+binop ::= PLUS:plus
+        {:
+            RESULT = new Node(plus);
+        :}
+        | MINUS:minus
+        {:
+            RESULT = new Node(minus);
+        :}
+        | TIMES:times
+        {:
+            RESULT = new Node(times);
+        :}
+        | DIV:div
+        {:
+            RESULT = new Node(div);
+        :}
+        | UP_CARET:up_caret
+        {:
+            RESULT = new Node(up_caret);
+        :}
+        | PERCENT:percent
+        {:
+            RESULT = new Node(percent);
+        :}
+        | TWO_PERIOD:two_period
+        {:
+            RESULT = new Node(two_period);
+        :}
+        | LESS_THAN:less_than
+        {:
+            RESULT = new Node(less_than);
+        :}
+        | LESS_THAN_EQUAL:less_than_equal
+        {:
+            RESULT = new Node(less_than_equal);
+        :}
+        | GREATHER_THAN:greather_than
+        {:
+            RESULT = new Node(greather_than);
+        :}
+        | GREATHER_THAN_EQUAL:greather_than_equal
+        {:
+            RESULT = new Node(greather_than_equal);
+        :}
+        | EQUAL:equal
+        {:
+            RESULT = new Node(equal);
+
+        :}
+        | DIFFERENT:different
+        {:
+            RESULT = new Node(different);
+        :}
+        | AND:and
+        {:
+            RESULT = new Node(and);
+
+        :}
+        | OR:or
+        {:
+            RESULT = new Node(or);
+
+        :}
+        ;
+
+unop ::= MINUS:minus
+        {:
+            RESULT = new Node(minus);
+        :}
+       | NOT:not
+        {:
+            RESULT = new Node(not);
+        :}
+       | LENGTH:length
+        {:
+            RESULT = new Node(length);
+        :}
+       ;
+
+semicolontemp ::= SEMICOLON:semicolon
+        {:
+            RESULT = new Node(semicolon);
+        :}
+        |
+        ;
+
+fieldsep ::= COMMA:comma
+        {:
+            RESULT = new Node(comma);
+        :}
+        | SEMICOLON:semicolon
+        {:
+            RESULT = new Node(semicolon);
+
+        :}
+        ;
+
+
+commaellipsistemp ::= COMMA:comma ELLIPSIS:ellipsis
+        {:
+        // Node comma = new Node(comma);
+        Node ell = new Node(ellipsis);
+        ell.addChildren(comma);
+        RESULT = ell;
+:}
+        |
+        ;
+
+expcommatemp ::= COMMA:comma exp:exp expcommatemp:expcommatemp
+        {:
+            // Node comma = new Node(comma);
+            expcommatemp.addChildren(comma);
+            expcommatemp.addChildren(exp);
+            RESULT = expcommatemp;
+        :}
+        |
+        ;
+
+commaidentifiertemp ::= COMMA:comma IDENTIFIER:id commaidentifiertemp:commaidentifiertemp
+        {:
+            // Node comma = new Node(comma);
+            // Node id = new Node(id);
+            commaidentifiertemp.addChildren(comma);
+            commaidentifiertemp.addChildren(id);
+            RESULT = commaidentifiertemp;
+        :}
+        |
+        ;
+
+commavartemp ::= COMMA:comma var:var commavartemp:commavartemp
+        {:
+            // Node comma = new Node(comma);
+            commavartemp.addChildren(comma);
+            commavartemp.addChildren(var);
+            RESULT = commavartemp;
+        :}
+        |
+        ;
+
+commaexptemp ::= COMMA:comma exp:exp
+        {:
+            // Node comma = new Node(comma);
+            exp.addChildren(comma);
+            RESULT = exp;
+        :}
+        |
+        ;
+
+args ::= OPEN_PARENTHESES:openP explisttemp:explisttemp CLOSE_PARENTHESES:closeP
+        {:
+            explisttemp.addChildren(openP);
+            explisttemp.addChildren(closeP);
+            RESULT = explisttemp;
+        :}
+    
+       | tableconstructor:tableconstructor
+       {:
+          RESULT = tableconstructor;
+       :}
+
+       | STRING:string
+       {:
+          RESULT = new Node(string);
+       :}
+       ;
+
+exp ::=  exp:exp binop:binop exptemp:exptemp
+        {:
+            binop.addChildren(exp);
+            binop.addChildren(exptemp);
+            RESULT = binop;
+        :}
+        | unop:unop exp:exp
+        {:
+            unop.addChildren(exp);
+            RESULT = unop;
+        :}
+        | exptemp:exptemp
+        {:
+            RESULT = exptemp;
+        :}
+        ;
+
+exptemp ::= NIL:n
+        {:
+            RESULT = new Node(n);
+        :}
+        | FALSE:f
+        {:
+            RESULT = new Node(f);
+        :}
+        | TRUE:t
+        {:
+            RESULT = new Node(t);
+        :}
+        | NUMBER:num
+        {:
+            RESULT = new Node(num);
+        :}
+        | STRING:str
+        {:
+            RESULT = new Node(str);
+        :}
+        | ELLIPSIS:ellipsis
+        {:
+           RESULT = new Node(ellipsis);
+        :}
+        | function:function
+        {: 
+            RESULT = function;
+            //RESULT = new Node(function); 
+        :}
+        | prefixexp:prefixexp
+        {: 
+            RESULT = prefixexp; 
+        :}
+        | tableconstructor:tableconstructor
+        {: 
+            RESULT = tableconstructor; 
+        :}
+        ;
+
+funcbody ::= OPEN_PARENTHESES:openP parlisttemp:parlisttemp CLOSE_PARENTHESES:closeP block:block END:end
+            {:
+                parlisttemp.addChildren(openP);
+                parlisttemp.addChildren(closeP);
+                block.addChildren(parlisttemp);
+                block.addChildren(end);
+                RESULT = block;
+            :}
+          ;
+
+prefixexp ::= var:var
+            {: 
+                RESULT = var; 
+            :}
+            | functioncall:functioncall
+            {: 
+                RESULT = functioncall; 
+            :}
+            | OPEN_PARENTHESES:openP exp:exp CLOSE_PARENTHESES:closeP
+            {: 
+                exp.addChildren(openP);
+                exp.addChildren(closeP);
+                RESULT = exp;
+            :}
+            ;
