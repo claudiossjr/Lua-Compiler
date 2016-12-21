@@ -84,6 +84,7 @@ non terminal Node ifstatment;
 non terminal Node functioncalltemp;
 non terminal Node vartemp;
 non terminal Node exptemp;
+non terminal Node chucktemp;
 
 
 /* Precedences */
@@ -99,7 +100,13 @@ precedence right UP_CARET;
 precedence left COMMA;
 precedence left OPEN_PARENTHESES;
 
-start with chuck;
+start with chucktemp;
+
+chucktemp ::= chuck:chunck
+        {:
+            System.out.println(chunck);
+            RESULT = chunck;
+        :};
 
 chuck ::= tempchuck:tpchuck laststattemp:ltstattp
         {:
@@ -112,7 +119,7 @@ chuck ::= tempchuck:tpchuck laststattemp:ltstattp
 
 tempchuck ::= stat:st semicolontemp:smcltp tempchuck:tpchuck
         {:
-            Node node = new Node("EOL");
+            Node node = new Node(new Token("EOL"));
             node.addChildren(st);
             node.addChildren(smcltp);
             node.addChildren(tpchuck);

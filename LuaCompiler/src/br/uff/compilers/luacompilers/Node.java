@@ -26,7 +26,10 @@ public class Node {
     
     @Override
     public String toString() {
-        print();
+        if (this.info != null)
+        {
+            print();
+        }
         return "";
     }
 
