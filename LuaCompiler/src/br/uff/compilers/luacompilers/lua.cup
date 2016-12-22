@@ -110,16 +110,16 @@ chucktemp ::= chuck:chunck
 
 chuck ::= tempchuck:tpchuck laststattemp:ltstattp
         {:
-            Node root = new Node(new Token("EOF"));
-            root.addChildren(tpchuck);
-            root.addChildren(ltstattp);
-            RESULT = root;
+            Node node = new Node(new Token("#"));
+            node.addChildren(tpchuck);
+            node.addChildren(ltstattp);
+            RESULT = node;
         :}
         ;
 
 tempchuck ::= stat:st semicolontemp:smcltp tempchuck:tpchuck
         {:
-            Node node = new Node(new Token("EOL"));
+            Node node = new Node(new Token("#"));
             node.addChildren(st);
             node.addChildren(smcltp);
             node.addChildren(tpchuck);
@@ -131,10 +131,10 @@ tempchuck ::= stat:st semicolontemp:smcltp tempchuck:tpchuck
 
 laststattemp ::= laststat:ltstat semicolontemp:smcltp
         {:
-            Node root = new Node(new Token("EOF"));
-            root.addChildren(ltstat);
-            root.addChildren(smcltp);
-            RESULT = root;
+            Node node = new Node(new Token("#"));
+            node.addChildren(ltstat);
+            node.addChildren(smcltp);
+            RESULT = node;
         :}
         |
         {: RESULT = new Node(); :}
@@ -144,7 +144,7 @@ block ::= chuck:ch
         {:
             RESULT = ch;
         :}
-          ;
+        ;
 
 stat ::= varlist:vlist SIGN:sign explist:elist
         {:
@@ -378,8 +378,10 @@ namelist ::= IDENTIFIER:id commaidentifiertemp:commaidentifiertemp
 
 explist ::= exp:exp expcommatemp:expcommatemp
         {:
-            expcommatemp.addChildren(exp);
-            RESULT = expcommatemp;
+            Node node = new Node(new Token("#"));
+            node.addChildren(exp);
+            node.addChildren(expcommatemp);
+            RESULT = node;
         :}
         ;
 
@@ -571,6 +573,7 @@ semicolontemp ::= SEMICOLON:semicolon
             RESULT = new Node(semicolon);
         :}
         |
+        {: RESULT = new Node(); :}
         ;
 
 fieldsep ::= COMMA:comma
@@ -587,10 +590,10 @@ fieldsep ::= COMMA:comma
 
 commaellipsistemp ::= COMMA:comma ELLIPSIS:ellipsis
         {:
-         Node comm = new Node(comma);
-        //Node ell = new Node(ellipsis);
-        comm.addChildren(ellipsis);
-        RESULT = comm;
+           Node comm = new Node(comma);
+           //Node ell = new Node(ellipsis);
+           comm.addChildren(ellipsis);
+           RESULT = comm;
         :}
         |
         {: RESULT = new Node(); :}
@@ -598,10 +601,10 @@ commaellipsistemp ::= COMMA:comma ELLIPSIS:ellipsis
 
 expcommatemp ::= COMMA:comma exp:exp expcommatemp:expcommatemp
         {:
-            // Node comma = new Node(comma);
-            expcommatemp.addChildren(comma);
-            expcommatemp.addChildren(exp);
-            RESULT = expcommatemp;
+            Node node = new Node(comma);
+            node.addChildren(exp);
+            node.addChildren(expcommatemp);
+            RESULT = node;
         :}
         |
         {: RESULT = new Node(); :}
@@ -620,10 +623,10 @@ commaidentifiertemp ::= COMMA:comma IDENTIFIER:id commaidentifiertemp:commaident
 
 commavartemp ::= COMMA:comma var:var commavartemp:commavartemp
         {:
-            // Node comma = new Node(comma);
-            commavartemp.addChildren(comma);
-            commavartemp.addChildren(var);
-            RESULT = commavartemp;
+            Node node = new Node(comma);
+            node.addChildren(var);
+            node.addChildren(commavartemp);
+            RESULT = node;
         :}
         |
         {: RESULT = new Node(); :}
@@ -631,9 +634,9 @@ commavartemp ::= COMMA:comma var:var commavartemp:commavartemp
 
 commaexptemp ::= COMMA:comma exp:exp
         {:
-            // Node comma = new Node(comma);
-            exp.addChildren(comma);
-            RESULT = exp;
+            Node node = new Node(comma);
+            node.addChildren(exp);
+            RESULT = node;
         :}
         |
         {: RESULT = new Node(); :}
@@ -641,11 +644,12 @@ commaexptemp ::= COMMA:comma exp:exp
 
 args ::= OPEN_PARENTHESES:openP explisttemp:explisttemp CLOSE_PARENTHESES:closeP
         {:
-            explisttemp.addChildren(openP);
-            explisttemp.addChildren(closeP);
-            RESULT = explisttemp;
-        :}
-    
+            Node node = new Node(new Token("#"));
+            node.addChildren(openP);
+            node.addChildren(explisttemp);
+            node.addChildren(closeP);
+            RESULT = node;
+        :}    
        | tableconstructor:tableconstructor
        {:
           RESULT = tableconstructor;
@@ -701,7 +705,6 @@ exptemp ::= NIL:n
         | function:function
         {: 
             RESULT = function;
-            //RESULT = new Node(function); 
         :}
         | prefixexp:prefixexp
         {: 
@@ -715,12 +718,18 @@ exptemp ::= NIL:n
 
 funcbody ::= OPEN_PARENTHESES:openP parlisttemp:parlisttemp CLOSE_PARENTHESES:closeP block:block END:end
             {:
+                Node node = new Node(new Token("#"));
+
+                Node oP = new Node(openP);
+                oP.addChildren(parlisttemp);
+
+                node.addChildren(oP);
                 
-                parlisttemp.addChildren(openP);
-                parlisttemp.addChildren(closeP);
-                block.addChildren(parlisttemp);
-                block.addChildren(end);
-                RESULT = block;
+                Node cP = new Node(closeP);
+                cP.addChildren(block);
+                node.addChildren(cP);
+                node.addChildren(end);
+                RESULT = node;
             :}
           ;
 
@@ -734,8 +743,11 @@ prefixexp ::= var:var
             :}
             | OPEN_PARENTHESES:openP exp:exp CLOSE_PARENTHESES:closeP
             {: 
-                exp.addChildren(openP);
-                exp.addChildren(closeP);
+                Node node = new Node(new Token("#"));
+                Node oP = new Node(openP);
+                oP.addChildren(exp);
+                node.addChildren(oP);
+                node.addChildren(closeP);
                 RESULT = exp;
             :}
             ;
