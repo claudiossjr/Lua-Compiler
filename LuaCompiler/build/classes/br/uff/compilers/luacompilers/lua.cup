@@ -387,8 +387,10 @@ explist ::= exp:exp expcommatemp:expcommatemp
 
 functioncall ::= prefixexp:prefixexp functioncalltemp:functioncalltemp
             {: 
-                functioncalltemp.addChildren(prefixexp);
-                RESULT = functioncalltemp;
+                Node node = new Node(new Token("#"));
+                node.addChildren(prefixexp);
+                node.addChildren(functioncalltemp);
+                RESULT = node;
             :}
             ;
 
