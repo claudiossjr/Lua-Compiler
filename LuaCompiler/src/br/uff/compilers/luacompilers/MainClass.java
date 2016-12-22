@@ -7,6 +7,7 @@ package br.uff.compilers.luacompilers;
 
 import java.io.*;
 import java.util.Scanner;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -48,13 +49,15 @@ public class MainClass {
                     System.out.println("Gerado!");
                     break;
                 case EXECUTAR: 
+                    System.out.println("Insira o caminho completo do arquivo");
                     String nomeDoArquivo = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/newfile.txt";
                     String[] argsLuaParser = {nomeDoArquivo};
                     LuaParser.main(argsLuaParser);
                     System.out.println("Executado!");
                     break;
                 case LEXER:
-                    String nomeDoArquivoLexer = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/cla.uff";
+                    System.out.println("Insira o caminho completo do arquivo");
+                    String nomeDoArquivoLexer = f.getAbsolutePath()+"/src/br/uff/compilers/luacompilers/newfile.txt";
                     String[] argsLuaLexer = {nomeDoArquivoLexer};
                     LuaLexer.main(argsLuaLexer);
                     System.out.println("Executado!");
