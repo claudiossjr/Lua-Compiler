@@ -396,11 +396,11 @@ functioncall ::= prefixexp:prefixexp functioncalltemp:functioncalltemp
 
 functioncalltemp ::= COLON:colon IDENTIFIER:id args:args
             {:
-                // Node colon = new Node(colon);
-                Node ids = new Node(id);
-                args.addChildren(colon);
-                ids.addChildren(args);
-                RESULT = ids;
+                Node node = new Node(colon);
+                //Node ids = new Node(id);
+                node.addChildren(id);
+                node.addChildren(args);
+                RESULT = node;
             :}
             | args:args
             {:
