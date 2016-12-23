@@ -1,10 +1,8 @@
-package Fonte;
 
 /* User Code */
 import java.util.*;
 import java_cup.runtime.*;
 import java.io.*; 
-import Fonte.sym;
 
 %%
 

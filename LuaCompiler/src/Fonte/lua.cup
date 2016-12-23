@@ -1,4 +1,3 @@
-package Fonte;
 
 import java_cup.runtime.*;
 import java.io.FileReader;

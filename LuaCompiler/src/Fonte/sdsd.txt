@@ -1,0 +1,15 @@
+--[[
+
+This Program is to look at me --mmamaamma
+
+--]]
+do
+   local oldprint = print -- Grava a variável “print” em “oldprint”
+   print = function(s)    -- Redefine a função “print”
+      if s == "foo" then
+         oldprint("bar")
+      else
+         oldprint(s)
+      end
+   end
+end
