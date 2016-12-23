@@ -45,7 +45,10 @@ WhiteSpace = {LineTerminator} | [ \t\f]
 
 /* Comments can be inline or block comments */
 regex_inline_comment = -{2}[^\[{2}][^\]{2}]\s*.*
-regex_block_comment = -{2}\[((=*)\[(.|\n)*?)\]\2\]
+regex_comment_start = -{2}\[{2}
+regex_comment_content = ([^*]|\*[^/])
+regex_comment_end = -{2}\]{2}
+regex_block_comment = {regex_comment_start}{regex_comment_content}*{regex_comment_end} //--\[(=*)\[(.|\n)*?\]\1\]
 regex_comment = {regex_inline_comment} | {regex_block_comment}
 
 /* Name can be variable or function name */
@@ -63,7 +66,6 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 %%
 /* Lexical Rules */
 
-{regex_comment} 		{ System.out.printf(" COMMENT"); }
 
 /* tokens */
 "do"					{ System.out.printf(" DO"); return new Symbol(sym.DO, createToken(yytext())); } 
@@ -117,10 +119,11 @@ regex_number = {regex_integer} | {regex_float} | {regex_scientific_notation}
 "not"					{ System.out.printf(" NOT"); return new Symbol(sym.NOT, createToken(yytext()) ); }
 "#"					{ System.out.printf(" LENGTH"); return new Symbol(sym.LENGTH, createToken(yytext()) ); }
  
-{regex_identifier} 		{ System.out.printf(" IDENTIFIER"); return new Symbol(sym.IDENTIFIER, createToken(yytext()) ); }
-{regex_number} 			{ System.out.printf(" NUMBER"); return new Symbol(sym.NUMBER, createToken(yytext()) ); }
-{regex_string} 			{ System.out.printf(" STRING"); return new Symbol(sym.STRING, createToken(yytext()) ); }
+{regex_comment}                         { System.out.printf(" COMMENT"); }
+{regex_identifier}                      { System.out.printf(" IDENTIFIER"); return new Symbol(sym.IDENTIFIER, createToken(yytext()) ); }
+{regex_number}                          { System.out.printf(" NUMBER"); return new Symbol(sym.NUMBER, createToken(yytext()) ); }
+{regex_string}                          { System.out.printf(" STRING"); return new Symbol(sym.STRING, createToken(yytext()) ); }
 
-{LineTerminator}                { /* Syntax Error */ }
-{WhiteSpace}                    { /* Syntax Error */ }
-.                               { /* Syntax Error */ }
+{LineTerminator}                        { /* Syntax Error */ }
+{WhiteSpace}                            { /* Syntax Error */ }
+.                                       { /* Syntax Error */ }
